@@ -13,18 +13,82 @@
 <body>
 
     <div class="container">
+        <h2>My places</h2>
         <div ng-controller="mainController">
-            <div class="weather-widget">
-                <div>
-                    <h2 class="city-name">Barcelona</h2>
-                    <div>
-                        <span>24°C</span>
+            <div class="row widget-container">
+                <div class="weather-widget">
+                    <div class="widget-body">
+                        <div class="left">
+                            <p class="city-name">Barcelona</p>
+                            <p class="country-name">Spain</p>
+                            <div class="temp-container">
+                                <span class="temp">24°C</span>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="img/weather_icons/64/16.png">
+                        </div>
                     </div>
-                    <footer>
+                    <div class="widget-footer">
                         options
-                    </footer>
+                    </div>
+                </div>
+
+                <div class="weather-widget" style="background: purple">
+                    <div class="widget-body">
+                        <div class="left">
+                            <p class="city-name">Barcelona</p>
+                            <p class="country-name">Spain</p>
+                            <div>
+                                <span class="temp">24°C</span>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="img/weather_icons/64/16.png">
+                        </div>
+                    </div>
+                    <div class="widget-footer">
+                        options
+                    </div>
+                </div>
+
+                <div class="weather-widget" style="background: red">
+                    <div class="widget-body">
+                        <div class="left">
+                            <p class="city-name">Barcelona</p>
+                            <p class="country-name">Spain</p>
+                            <div>
+                                <span class="temp">24°C</span>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="img/weather_icons/64/16.png">
+                        </div>
+                    </div>
+                    <div class="widget-footer">
+                        options
+                    </div>
+                </div>
+
+                <div class="weather-widget" style="background: gray">
+                    <div class="widget-body">
+                        <div class="left">
+                            <p class="city-name">Barcelona</p>
+                            <p class="country-name">Spain</p>
+                            <div>
+                                <span class="temp">24°C</span>
+                            </div>
+                        </div>
+                        <div class="right">
+                            <img src="img/weather_icons/64/16.png">
+                        </div>
+                    </div>
+                    <div class="widget-footer">
+                        options
+                    </div>
                 </div>
             </div>
+            <button class="fab fab-balanced pull-right">+</button>
         </div>
     </div>
 
