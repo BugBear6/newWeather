@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="newWeather">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>newWeather</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div ng-controller="mainController">
+            <div class="weather-widget">
+                <div>
+                    <h2 class="city-name">Barcelona</h2>
+                    <div>
+                        <span>24°C</span>
+                    </div>
+                    <footer>
+                        options
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="app/api-config.js"></script>
+    <script src="app/app.js"></script>
+</body>
+
+</html>

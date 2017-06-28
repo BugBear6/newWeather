@@ -1,0 +1,7 @@
+node_modules/
+bower_components/
+.sass-cache/
+.vscode/
+api-config.js
+ehthumbs.db
+Thumbs.db
