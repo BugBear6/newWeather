@@ -23,43 +23,44 @@
     <div class="container">
 
         <h2>My places</h2>
-        <div ng-controller="mainController">
+        <div ng-controller="weatherDashboardController as dashboardCtrl">
             <div class="row widget-container">
 
-                <weather-widget></weather-widget>
-                <weather-widget></weather-widget>
+                <ng-repat="city in dashboardCtrl.cities track by $index">
+                    <weather-widget today="dashboardCtrl.weather[$index]"></weather-widget>
+                    </ng-repat>
 
             </div>
-            <!--<button class="fab fab-balanced pull-right">+</button>-->
+            <!--<button class=" fab fab-balanced pull-right ">+</button>-->
         </div>
     </div>
 
     <!-- weather-widget.html -->
-    <script type="text/ng-template" id="weather-widget.html">
-        <div class="weather-widget">
-            <div class="widget-body">
-                <div class="left">
-                    <p class="city-name">Barcelona</p>
-                    <p class="country-name">Spain</p>
-                    <div class="temp-container">
-                        <span class="temp">24°C</span>
+    <script type="text/ng-template " id="weather-widget.html ">
+        <div class="weather-widget ">
+            <div class="widget-body ">
+                <div class="left ">
+                    <p class="city-name ">Barcelona</p>
+                    <p class="country-name ">Spain</p>
+                    <div class="temp-container ">
+                        <span class="temp ">{{weather.today.temp.day}}°C</span>
                     </div>
                 </div>
-                <div class="right">
-                    <img src="img/weather_icons/64/16.png">
+                <div class="right ">
+                    <img src="img/weather_icons/64/16.png ">
                 </div>
             </div>
-            <div class="widget-footer">
+            <div class="widget-footer ">
                 options
             </div>
         </div>
     </script>
 
 
-    <script src="bower_components/angular/angular.min.js"></script>
-    <script src="bower_components/angular-translate/angular-translate.js"></script>
-    <script src="app/api-config.js"></script>
-    <script src="app/app.js"></script>
+    <script src="bower_components/angular/angular.min.js "></script>
+    <script src="bower_components/angular-translate/angular-translate.js "></script>
+    <script src="app/api-config.js "></script>
+    <script src="app/app.js "></script>
 </body>
 
 </html>
