@@ -42,30 +42,46 @@ img {
     margin-left: -15px;
 }
 
+.navbar {
+    height: 52px;
+    background: purple;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .search-input {
+        width: 100%;
+        height: 40px;
+        font-size: 18px;
+        padding: 0px 10px 0px 35px;
+    }
+}
+
 .widget-container {
     margin-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 .weather-widget {
     width: 355px;
     min-width: 355px;
     height: 180px;
-    padding: 30px;
+    padding: 30px 35px;
     margin: 15px;
-    background: #f5be25;
+    // background: #f5be25;
+    background: #c1c1c1;
     border-radius: 8px;
     position: relative;
     overflow: hidden;
     letter-spacing: 0.5px;
+    box-shadow: 0 3px 8px 0px black;
     .widget-body {
         display: flex;
         justify-content: center;
         align-items: center;
         .left {
-            flex: 1;
+            flex: 2;
             p {
                 margin-bottom: 2px;
             }
@@ -91,7 +107,7 @@ img {
         font-weight: 300;
     }
     .widget-footer {
-        background: orange;
+        background: #888888;
         position: absolute;
         border: 0;
         bottom: 0;

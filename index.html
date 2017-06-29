@@ -12,85 +12,48 @@
 
 <body>
 
+    <nav class="navbar">
+        <div class="container">
+            <form action="">
+                <input type="text" class="search-input">
+            </form>
+        </div>
+    </nav>
+
     <div class="container">
+
         <h2>My places</h2>
         <div ng-controller="mainController">
             <div class="row widget-container">
-                <div class="weather-widget">
-                    <div class="widget-body">
-                        <div class="left">
-                            <p class="city-name">Barcelona</p>
-                            <p class="country-name">Spain</p>
-                            <div class="temp-container">
-                                <span class="temp">24°C</span>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <img src="img/weather_icons/64/16.png">
-                        </div>
-                    </div>
-                    <div class="widget-footer">
-                        options
-                    </div>
-                </div>
 
-                <div class="weather-widget" style="background: purple">
-                    <div class="widget-body">
-                        <div class="left">
-                            <p class="city-name">Barcelona</p>
-                            <p class="country-name">Spain</p>
-                            <div>
-                                <span class="temp">24°C</span>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <img src="img/weather_icons/64/16.png">
-                        </div>
-                    </div>
-                    <div class="widget-footer">
-                        options
-                    </div>
-                </div>
+                <weather-widget></weather-widget>
+                <weather-widget></weather-widget>
 
-                <div class="weather-widget" style="background: red">
-                    <div class="widget-body">
-                        <div class="left">
-                            <p class="city-name">Barcelona</p>
-                            <p class="country-name">Spain</p>
-                            <div>
-                                <span class="temp">24°C</span>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <img src="img/weather_icons/64/16.png">
-                        </div>
-                    </div>
-                    <div class="widget-footer">
-                        options
-                    </div>
-                </div>
-
-                <div class="weather-widget" style="background: gray">
-                    <div class="widget-body">
-                        <div class="left">
-                            <p class="city-name">Barcelona</p>
-                            <p class="country-name">Spain</p>
-                            <div>
-                                <span class="temp">24°C</span>
-                            </div>
-                        </div>
-                        <div class="right">
-                            <img src="img/weather_icons/64/16.png">
-                        </div>
-                    </div>
-                    <div class="widget-footer">
-                        options
-                    </div>
-                </div>
             </div>
-            <button class="fab fab-balanced pull-right">+</button>
+            <!--<button class="fab fab-balanced pull-right">+</button>-->
         </div>
     </div>
+
+    <!-- weather-widget.html -->
+    <script type="text/ng-template" id="weather-widget.html">
+        <div class="weather-widget">
+            <div class="widget-body">
+                <div class="left">
+                    <p class="city-name">Barcelona</p>
+                    <p class="country-name">Spain</p>
+                    <div class="temp-container">
+                        <span class="temp">24°C</span>
+                    </div>
+                </div>
+                <div class="right">
+                    <img src="img/weather_icons/64/16.png">
+                </div>
+            </div>
+            <div class="widget-footer">
+                options
+            </div>
+        </div>
+    </script>
 
 
     <script src="bower_components/angular/angular.min.js"></script>
