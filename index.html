@@ -26,41 +26,63 @@
         <div ng-controller="weatherDashboardController as dashboardCtrl">
             <div class="row widget-container">
 
-                <ng-repat="city in dashboardCtrl.cities track by $index">
-                    <weather-widget today="dashboardCtrl.weather[$index]"></weather-widget>
-                    </ng-repat>
+                <div on-finish-render weather-widget ng-repeat="city in dashboardCtrl.cities" city="city">
+                </div>
 
+                <!--<button class=" fab fab-balanced pull-right ">+</button>-->
             </div>
-            <!--<button class=" fab fab-balanced pull-right ">+</button>-->
         </div>
-    </div>
 
-    <!-- weather-widget.html -->
-    <script type="text/ng-template " id="weather-widget.html ">
-        <div class="weather-widget ">
-            <div class="widget-body ">
-                <div class="left ">
-                    <p class="city-name ">Barcelona</p>
-                    <p class="country-name ">Spain</p>
-                    <div class="temp-container ">
-                        <span class="temp ">{{weather.today.temp.day}}°C</span>
+        <!-- weather-widget.html -->
+        <script type="text/ng-template " id="weather-widget.html ">
+            <div class="weather-widget ">
+                <div class="widget-body ">
+                    <div class="left ">
+                        <p class="city-name" ng-bind="location.city"></p>
+                        <p class="country-name" ng-bind="location.country"></p>
+                        <div class="temp-container ">
+                            <span class="temp">{{weather.today.temp.day | number:0}}°C</span>
+                        </div>
+                    </div>
+                    <div class="right ">
+                        <img src="img/weather_icons/64/16.png ">
                     </div>
                 </div>
-                <div class="right ">
-                    <img src="img/weather_icons/64/16.png ">
-                </div>
+                <ul class="forecast-list">
+                    <li class="forecast-day">
+                        <p>Mon</p>
+                        <img src="img/weather_icons/64/16.png ">
+                        <p class="forecast-day-temp">16°C</p>
+                    </li>
+                    <li class="forecast-day">
+                        <p>Tue</p>
+                        <img src="img/weather_icons/64/16.png ">
+                        <p class="forecast-day-temp">12°C</p>
+                    </li>
+                    <li class="forecast-day">
+                        <p>Wen</p>
+                        <img src="img/weather_icons/64/16.png ">
+                        <p class="forecast-day-temp">12°C</p>
+                    </li>
+                    <li class="forecast-day">
+                        <p>Thr</p>
+                        <img src="img/weather_icons/64/16.png ">
+                        <p class="forecast-day-temp">14°C</p>
+                    </li>
+                    <li class="forecast-day">
+                        <p>Fri</p>
+                        <img src="img/weather_icons/64/16.png ">
+                        <p class="forecast-day-temp">16°C</p>
+                    </li>
+                </ul>
             </div>
-            <div class="widget-footer ">
-                options
-            </div>
-        </div>
-    </script>
+        </script>
 
 
-    <script src="bower_components/angular/angular.min.js "></script>
-    <script src="bower_components/angular-translate/angular-translate.js "></script>
-    <script src="app/api-config.js "></script>
-    <script src="app/app.js "></script>
+        <script src="bower_components/angular/angular.min.js "></script>
+        <script src="bower_components/angular-translate/angular-translate.js "></script>
+        <script src="app/api-config.js "></script>
+        <script src="app/app.js "></script>
 </body>
 
 </html>

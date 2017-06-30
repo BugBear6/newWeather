@@ -2,62 +2,59 @@ angular.module('newWeather', [])
 
 .controller('weatherDashboardController', [function() {
     var vm = this;
-    vm.cities = ['Barcelona'];
-    vm.weather = {};
+    vm.cities = [{
+            cityName: 'Madrid'
+        },
+        {
+            cityName: 'Barcelona'
+        }
+    ];
 }])
 
-
-.directive('weatherWidget', function() {
+.directive('weatherWidget', function(getWeatherService, $rootScope) {
     return {
         templateUrl: 'weather-widget.html',
         scope: {
-            city: '@'
+            city: '='
         },
-        controller: ['$scope', '$http', function($scope, $http) {
-            // getWeatherService.fiveDaysBroadcast()
+        link: function(scope, elem, attrs) {
 
-            var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=Barcelona&cnt=5&units=metric&appid=${api_key}`;
-            var weather;
+            getWeatherService.forSixDays(scope.city.cityName).then(
+                function onSuccess(response) {
 
-            $http({
-                method: 'GET',
-                url: url
-            }).then(function successCallback(response) { // on success
-                    weather = {
+                    console.log('from factory to controller', response)
+                    console.log('elem', elem)
+                    console.log('attrs', attrs)
+                    
+                    scope.weather = {
                         today: response.data.list.shift(),
                         forecast: response.data.list
                     }
-                    console.info(weather)
-                    $scope.weather = weather;
+                    scope.location = {
+                        city: response.data.city.name,
+                        country: response.data.city.country
+                    }
                 },
-                function errorCallback(response) { // on error
-                    console.log(response);
+                function onError(response) {
+                    console.log(response)
                 });
-        }],
-}
+
+        }
+    }
 })
 
-// get weather
-//
-// .service('getWeatherService', function($http) {
-//     this.fiveDaysBroadcast = function() {
-//         var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=Barcelona&cnt=5&units=metric&appid=${api_key}`;
-//         var weather;
-
-//         $http({
-//             method: 'GET',
-//             url: url
-//         }).then(function successCallback(response) { // on success
-//             return response;
-//                 // weather = {
-//                 //     today: response.data.list.shift(),
-//                 //     forecast: response.data.list
-//                 // }
-//                 // return weather;
-//             },
-//             function errorCallback(response) { // on error
-//                 console.log(response);
-//             });
+.factory('getWeatherService', function($http) {
+    return {
+        forSixDays: function(city) {
+            console.log('city that comes', city)
+            var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=6&units=metric&appid=${api_key}`;
+            return $http({
+                method: 'GET',
+                url: url
+            });
+        }
+    }
+})
 
 //         // response.list.forEach(function(el) {
 //         //     data.push(round(el.temp.day));

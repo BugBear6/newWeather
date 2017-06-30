@@ -106,15 +106,26 @@ img {
         font-size: 41px;
         font-weight: 300;
     }
-    .widget-footer {
+    .forecast-list {
         background: #888888;
         position: absolute;
         border: 0;
         bottom: 0;
         width: 100%;
         left: 0;
-        height: 35px;
+        height: 60px;
         padding: 0 35px;
         line-height: 35px;
+        display: flex;
+        justify-content: space-between;
+        .forecast-day {
+        	display: flex;
+        	flex-direction: column;
+        	justify-content: center;
+        	align-items: center;
+        	img{
+        		max-width: 15px;
+        	}
+        }
     }
 }
