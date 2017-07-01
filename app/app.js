@@ -1,60 +1,94 @@
 angular.module('newWeather', [])
 
-.controller('weatherDashboardController', [function() {
-    var vm = this;
-    vm.cities = [{
+    .controller('weatherDashboardController', [function() {
+        var vm = this;
+
+        vm.cities = [{
             cityName: 'Madrid'
-        },
-        {
+        }, {
             cityName: 'Barcelona'
+        }];
+
+        vm.newCityFormData = {};
+
+        vm.addCity = function() {
+        	console.log(!vm.newCityFormData.newCityName);
+        	if (!vm.newCityFormData.newCityName) {
+        		return
+        	}
+
+        	var newCity = {
+        		cityName: vm.newCityFormData.newCityName,
+        		country: vm.newCityFormData.newCityCountry
+        	}
+        	vm.cities.push(newCity);
+
+        	vm.newCityForm.$setPristine();
+        	vm.newCityForm.$setUntouched();
+        	vm.newCityFormData = {};
+        };
+
+        vm.closeWidget = function (index) {
+        	console.log(index);
+        	vm.cities.splice(index, 1);
         }
-    ];
-}])
 
-.directive('weatherWidget', function(getWeatherService, $rootScope) {
-    return {
-        templateUrl: 'weather-widget.html',
-        scope: {
-            city: '='
-        },
-        link: function(scope, elem, attrs) {
+    }])
 
-            getWeatherService.forSixDays(scope.city.cityName).then(
-                function onSuccess(response) {
+    .directive('weatherWidget', function(getWeatherService, $rootScope) {
+        return {
+            templateUrl: 'weather-widget.html',
+            scope: {
+                city: '=',
+                closeWidget: '&'
+            },
+            link: function(scope, elem, attrs) {
 
-                    console.log('from factory to controller', response)
-                    console.log('elem', elem)
-                    console.log('attrs', attrs)
-                    
-                    scope.weather = {
-                        today: response.data.list.shift(),
-                        forecast: response.data.list
-                    }
-                    scope.location = {
-                        city: response.data.city.name,
-                        country: response.data.city.country
-                    }
-                },
-                function onError(response) {
-                    console.log(response)
+                getWeatherService.forSixDays(scope.city).then(
+                    function onSuccess(response) {
+
+                        console.log('from factory to controller', response)
+
+                        scope.weather = {
+                            today: response.data.list.shift(),
+                            forecast: response.data.list
+                        }
+                        scope.location = {
+                            city: response.data.city.name,
+                            country: response.data.city.country
+                        }
+                    },
+                    function onError(response) {
+                        console.log(response)
+                    });
+
+            }
+        }
+    })
+
+    .factory('getWeatherService', function($http) {
+        return {
+            forSixDays: function(city) {
+            	var cityName = city.cityName
+            	var country = (typeof city.country !== 'undefined' && city.country) ? ',' + city.country : '';
+                var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${cityName}${country}&cnt=6&units=metric&appid=${api_key}`;
+
+                return $http({
+                    method: 'GET',
+                    url: url
                 });
-
+            }
         }
-    }
-})
+    })
 
-.factory('getWeatherService', function($http) {
-    return {
-        forSixDays: function(city) {
-            console.log('city that comes', city)
-            var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=6&units=metric&appid=${api_key}`;
-            return $http({
-                method: 'GET',
-                url: url
-            });
-        }
-    }
-})
+// .factory('getDay', function(){
+// 	return {
+// 		getDay: function(timestamp){
+// 			console.log(timestamp);
+// 			var timestamp = new Date ()
+// 		}
+// 	}
+// })
 
 //         // response.list.forEach(function(el) {
 //         //     data.push(round(el.temp.day));

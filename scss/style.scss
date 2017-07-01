@@ -1,4 +1,6 @@
 @import 'fab_buttons';
+@import '../fonts/icomoon/style'; // import IcoMoon fonts
+
 * {
     margin: 0;
     padding: 0;
@@ -48,16 +50,34 @@ img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    .search-input {
-        width: 100%;
-        height: 40px;
-        font-size: 18px;
-        padding: 0px 10px 0px 35px;
-    }
+}
+
+.newCityForm{
+	display: flex;
+	position: relative;
+	.search-input {
+	    width: 100%;
+	    height: 40px;
+	    font-size: 18px;
+	    padding: 0px 10px 0px 35px;
+	    &.city-name{
+	    	flex:4;
+	    }
+	    &.country-name{
+	    	flex:1;
+	    }
+	}
+	.icon-search{
+		position: absolute;
+		left: 10px;
+		color: #c7c7c7;
+		font-size: 18px;
+		top: 10px;
+	}
 }
 
 .widget-container {
-    margin-top: 10px;
+    margin-top: 5px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -66,8 +86,8 @@ img {
 .weather-widget {
     width: 355px;
     min-width: 355px;
-    height: 180px;
-    padding: 30px 35px;
+    height: 220px;
+    padding: 30px;
     margin: 15px;
     // background: #f5be25;
     background: #c1c1c1;
@@ -76,6 +96,12 @@ img {
     overflow: hidden;
     letter-spacing: 0.5px;
     box-shadow: 0 3px 8px 0px black;
+    .close-widget{
+    	position: absolute;
+    	right: 10px;
+    	top:10px;
+    	cursor: pointer;
+    }
     .widget-body {
         display: flex;
         justify-content: center;
@@ -99,26 +125,25 @@ img {
         font-size: 15px;
         font-weight: 300;
     }
-    .temp-container {
-        margin-top: 10px;
-    }
     .temp {
+        margin-top: 10px;
         font-size: 41px;
         font-weight: 300;
     }
     .forecast-list {
+        height: 80px;
         background: #888888;
         position: absolute;
         border: 0;
         bottom: 0;
         width: 100%;
         left: 0;
-        height: 60px;
         padding: 0 35px;
         line-height: 35px;
         display: flex;
         justify-content: space-between;
         .forecast-day {
+        	font-size: 14px;
         	display: flex;
         	flex-direction: column;
         	justify-content: center;

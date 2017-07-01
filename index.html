@@ -1,88 +1,70 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="newWeather">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>newWeather</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body>
-
-    <nav class="navbar">
-        <div class="container">
-            <form action="">
-                <input type="text" class="search-input">
-            </form>
-        </div>
-    </nav>
-
-    <div class="container">
-
-        <h2>My places</h2>
+    <head>
+        <meta charset="utf-8"/>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
+        <title>
+            newWeather
+        </title>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet"/>
+        <link href="css/style.css" rel="stylesheet"/>
+    </head>
+    <body>
         <div ng-controller="weatherDashboardController as dashboardCtrl">
-            <div class="row widget-container">
-
-                <div on-finish-render weather-widget ng-repeat="city in dashboardCtrl.cities" city="city">
+        
+            <nav class="navbar">
+                <div class="container">
+                    <form class="newCityForm" name="dashboardCtrl.newCityForm" ng-submit="dashboardCtrl.addCity()">
+	                    <span class="icon-search"></span>
+                        <input class="search-input city-name" ng-model="dashboardCtrl.newCityFormData.newCityName" type="text" placeholder="Enter city name"></input>
+                        <input class="search-input country-name" ng-model="dashboardCtrl.newCityFormData.newCityCountry" type="text" placeholder="Country code (optional)"></input>
+                        <input type="submit" value="submit" style="display:none">
+                        </input>
+                    </form>
                 </div>
-
-                <!--<button class=" fab fab-balanced pull-right ">+</button>-->
+            </nav>
+            <div class="container">
+                <h2>
+                    My places
+                </h2>
+                <div class="row widget-container">
+                    <div weather-widget ng-repeat="city in dashboardCtrl.cities" city="city" close-widget="dashboardCtrl.closeWidget($index)" >
+                    </div>
+                    <!--<button class=" fab fab-balanced pull-right ">+</button>-->
+                </div>
             </div>
+            <!-- weather-widget.html -->
+            <script id="weather-widget.html " type="text/ng-template ">
+                <div class="weather-widget ">
+	                <div class="widget-body ">
+					<a class="icon-cancel-circle close-widget" ng-click="closeWidget()"> </a>	                
+	                    <div class="left ">
+	                        <p class="city-name" ng-bind="location.city"></p>
+	                        <p class="country-name" ng-bind="location.country"></p>
+	                        <p class="temp"><span ng-bind="weather.today.temp.day | number:0"></span>°C</p>
+	                    </div>
+	                    <div class="right ">
+	                        <img src="img/weather_icons/64/16.png ">
+	                    </div>
+	                </div>
+	                <ul class="forecast-list">
+	                    <li class="forecast-day" ng-repeat="dayForecast in weather.forecast track by $index">
+	                        <p class="day-name" ng-bind="dayForecast.dt*1000 | date : 'EEE'"></p>
+	                        <img src="img/weather_icons/64/16.png ">
+	                        <p class="forecast-day-temp"><span ng-bind="dayForecast.temp.day | number:0"></span>°C</p>
+	                    </li>
+	                </ul>
+	            </div>
+            </script>
+            <script src="bower_components/angular/angular.min.js ">
+            </script>
+            <script src="bower_components/angular-translate/angular-translate.js ">
+            </script>
+            <script src="app/api-config.js ">
+            </script>
+            <script src="app/app.js ">
+            </script>
         </div>
-
-        <!-- weather-widget.html -->
-        <script type="text/ng-template " id="weather-widget.html ">
-            <div class="weather-widget ">
-                <div class="widget-body ">
-                    <div class="left ">
-                        <p class="city-name" ng-bind="location.city"></p>
-                        <p class="country-name" ng-bind="location.country"></p>
-                        <div class="temp-container ">
-                            <span class="temp">{{weather.today.temp.day | number:0}}°C</span>
-                        </div>
-                    </div>
-                    <div class="right ">
-                        <img src="img/weather_icons/64/16.png ">
-                    </div>
-                </div>
-                <ul class="forecast-list">
-                    <li class="forecast-day">
-                        <p>Mon</p>
-                        <img src="img/weather_icons/64/16.png ">
-                        <p class="forecast-day-temp">16°C</p>
-                    </li>
-                    <li class="forecast-day">
-                        <p>Tue</p>
-                        <img src="img/weather_icons/64/16.png ">
-                        <p class="forecast-day-temp">12°C</p>
-                    </li>
-                    <li class="forecast-day">
-                        <p>Wen</p>
-                        <img src="img/weather_icons/64/16.png ">
-                        <p class="forecast-day-temp">12°C</p>
-                    </li>
-                    <li class="forecast-day">
-                        <p>Thr</p>
-                        <img src="img/weather_icons/64/16.png ">
-                        <p class="forecast-day-temp">14°C</p>
-                    </li>
-                    <li class="forecast-day">
-                        <p>Fri</p>
-                        <img src="img/weather_icons/64/16.png ">
-                        <p class="forecast-day-temp">16°C</p>
-                    </li>
-                </ul>
-            </div>
-        </script>
-
-
-        <script src="bower_components/angular/angular.min.js "></script>
-        <script src="bower_components/angular-translate/angular-translate.js "></script>
-        <script src="app/api-config.js "></script>
-        <script src="app/app.js "></script>
-</body>
-
+    </body>
 </html>
