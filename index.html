@@ -44,27 +44,24 @@
 	                        <p class="country-name" ng-bind="location.country"></p>
 	                        <p class="temp"><span ng-bind="weather.today.temp.day | number:0"></span>°C</p>
 	                    </div>
-	                    <div class="right ">
-	                        <img src="img/weather_icons/64/16.png ">
+	                    <div class="right">
+	                    	<span ng-bind-html="weather.today.weather[0].id | weatherIcon"></span>
 	                    </div>
 	                </div>
 	                <ul class="forecast-list">
 	                    <li class="forecast-day" ng-repeat="dayForecast in weather.forecast track by $index">
 	                        <p class="day-name" ng-bind="dayForecast.dt*1000 | date : 'EEE'"></p>
-	                        <img src="img/weather_icons/64/16.png ">
+	                        <span ng-bind-html="dayForecast.weather[0].id | weatherIcon"></span>
 	                        <p class="forecast-day-temp"><span ng-bind="dayForecast.temp.day | number:0"></span>°C</p>
 	                    </li>
 	                </ul>
 	            </div>
             </script>
-            <script src="bower_components/angular/angular.min.js ">
-            </script>
-            <script src="bower_components/angular-translate/angular-translate.js ">
-            </script>
-            <script src="app/api-config.js ">
-            </script>
-            <script src="app/app.js ">
-            </script>
+            <script src="bower_components/angular/angular.min.js "></script>
+            <script src="bower_components/angular-translate/angular-translate.js "></script>
+            <script src="bower_components/angular-sanitize/angular-sanitize.js "></script>
+            <script src="app/api-config.js "></script>
+            <script src="app/app.js "></script>
         </div>
     </body>
 </html>
