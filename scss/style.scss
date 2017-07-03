@@ -1,6 +1,23 @@
 @import 'fab_buttons';
 @import '../fonts/icomoon/style'; // import IcoMoon fonts
 
+@font-face {
+    font-family: 'MeteoconsRegular';
+    src: url('../fonts/meteocons-font/FONT/font-face/meteocons-webfont.eot');
+    src: url('../fonts/meteocons-font/FONT/font-face/meteocons-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/meteocons-font/FONT/font-face/meteocons-webfont.woff') format('woff'),
+         url('../fonts/meteocons-font/FONT/font-face/meteocons-webfont.ttf') format('truetype'),
+         url('../fonts/meteocons-font/FONT/font-face/meteocons-webfont.svg#MeteoconsRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+.icon:before {
+	font-family: 'MeteoconsRegular';
+	content: attr(data-icon);
+	font-size: 30px;
+}
+
+
 * {
     margin: 0;
     padding: 0;
@@ -116,6 +133,11 @@ img {
             display: flex;
             justify-content: center;
             flex: 1;
+        }
+        .today-condition {
+        	.icon:before {
+        		font-size: 66px;
+        	}
         }
     }
     .city-name {

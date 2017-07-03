@@ -1,114 +1,122 @@
 angular.module('newWeather', ['ngSanitize'])
 
-.controller('weatherDashboardController', [function() {
-	var vm = this;
+    .controller('weatherDashboardController', [function() {
+        var vm = this;
 
-	vm.cities = [{
-		cityName: 'Madrid'
-	}, {
-		cityName: 'Barcelona'
-	}];
+        vm.cities = [{
+            cityName: 'Madrid'
+        }, {
+            cityName: 'Barcelona'
+        }];
 
-	vm.newCityFormData = {};
+        vm.newCityFormData = {};
 
-	vm.addCity = function() {
-		if (!vm.newCityFormData.newCityName) {
-			return
-		}
+        vm.addCity = function() {
+            if (!vm.newCityFormData.newCityName) {
+                return
+            }
 
-		var newCity = {
-			cityName: vm.newCityFormData.newCityName,
-			country: vm.newCityFormData.newCityCountry
-		}
-		vm.cities.push(newCity);
+            var newCity = {
+                cityName: vm.newCityFormData.newCityName,
+                country: vm.newCityFormData.newCityCountry
+            }
+            vm.cities.push(newCity);
 
-		vm.newCityForm.$setPristine();
-		vm.newCityForm.$setUntouched();
-		vm.newCityFormData = {};
-	};
+            vm.newCityForm.$setPristine();
+            vm.newCityForm.$setUntouched();
+            vm.newCityFormData = {};
+        };
 
-	vm.closeWidget = function(index) {
-		vm.cities.splice(index, 1);
-	}
+        vm.closeWidget = function(index) {
+            vm.cities.splice(index, 1);
+        }
 
-}])
+    }])
 
-.filter('weatherIcon', function($rootScope, $timeout) {
-	return function(item) {
-		// var template = `<object type="image/svg+xml" data="img/weather-icons-set/CLOUDS/CLOUDS/001lighticons-02.svg" width="100" height="100">test</object>`; 
-		// var template = `<div ng-include="img/weather-icons-set/CLOUDS/CLOUDS/001lighticons-02.svg"></div>`; 
-		var template = `<img src="img/weather-icons-set/CLOUDS/CLOUDS/001lighticons-02.svg">`; 
-		// $rootScope.$on('weatherUpdate', function() {
-		console.log('after broadcast', item);
-		// switch (item) {
-		// 	case 800: // clear sky
-		// 		template = `<ng-include="img/weather-icons-set/CLOUDS/CLOUDS/001lighticons-02.svg"></ng-include>` ;
-		// 		break;
-		// 	case 801: // few clouds
-		// 		template = `img/weather-icons-set/CLOUDS/CLOUDS/001lighticons-08.svg`;
-		// 		break;
-		// 	case 802: // scatered clouds
-		// 		template = `img/weather-icons-set/CLOUDS/CLOUDS/001lighticons-14.svg`;
-		// 		break;
-		// }
+    .filter('weatherIcon', function($sce, $filter) {
+        return function(weatherCode, dt) {
+		var H = $filter('date')(dt, 'H')
+		if(H) console.log(H)
+            var isNight = H>=19 && H<=5 ? true : false;
+            var template;
+            var iconCode;
 
-		return template
-		// $timeout(function(){
-		// 	scope.$apply();
-		// }, 100);				
-		// });
-		// scope.template = `img/weather-icons-set/CLOUDS/CLOUDS/001lighticons-01.svg`;
-	}
-})
+            console.log('after broadcast', weatherCode);
 
-.directive('weatherWidget', function(getWeatherService, $rootScope) {
-	return {
-		templateUrl: 'weather-widget.html',
-		scope: {
-			city: '=',
-			closeWidget: '&'
-		},
-		link: function(scope, elem, attrs) {
+            if (weatherCode == 800) { // clear sky
+                iconCode = isNight ? '2' : 'B';
+            } else if (weatherCode == 801) { // few clouds
+                iconCode = isNight ? '4' : 'H';
+            } else if (weatherCode == 802 || weatherCode == 803 || weatherCode == 804) { // scatered, broken, overcast clouds
+                iconCode = isNight ? '5' : 'N';
+            } else if (weatherCode >= 500 && weatherCode <= 531) { // rain group
+                iconCode = isNight ? '8' : 'R';
+            } else if (weatherCode >= 600 && weatherCode <= 622) { // snow group
+                iconCode = isNight ? '#' : 'W';
+            } else if (weatherCode == 701) { // mist
+                iconCode = 'M';
+            } else if ((weatherCode >= 200 && weatherCode <= 232) || weatherCode == 960 || weatherCode == 961) { // storm
+                iconCode = isNight ? '&' : '0';
+            } else if (weatherCode == 953 || weatherCode == 954 || weatherCode == 955 || weatherCode == 956 || weatherCode == 957 || weatherCode == 958 || weatherCode == 959) { // wind
+                iconCode = isNight ? '&' : '0';
+            } else {
+                iconCode = ')';
+            }
 
-			getWeatherService.forSixDays(scope.city).then(
-				function onSuccess(response) {
+            template = `<span class="icon" data-icon="${iconCode}"></span>`
+            return $sce.trustAsHtml(template);
 
-					console.log('from factory to controller', response)
+        }
+    })
 
-					scope.weather = {
-						today: response.data.list.shift(),
-						forecast: response.data.list
-					}
-					scope.location = {
-						city: response.data.city.name,
-						country: response.data.city.country
-					}
+    .directive('weatherWidget', function(getWeatherService, $rootScope) {
+        return {
+            templateUrl: 'weather-widget.html',
+            scope: {
+                city: '=',
+                closeWidget: '&'
+            },
+            link: function(scope, elem, attrs) {
 
-					scope.initOver = true;
-					// $rootScope.$broadcast('weatherUpdate');
-				},
-				function onError(response) {
-					console.log(response)
-				});
+                getWeatherService.forSixDays(scope.city).then(
+                    function onSuccess(response) {
 
-		}
-	}
-})
+                        console.log('from factory to controller', response)
 
-.factory('getWeatherService', function($http) {
-	return {
-		forSixDays: function(city) {
-			var cityName = city.cityName
-			var country = (typeof city.country !== 'undefined' && city.country) ? ',' + city.country : '';
-			var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${cityName}${country}&cnt=6&units=metric&appid=${api_key}`;
+                        scope.weather = {
+                            today: response.data.list.shift(),
+                            forecast: response.data.list
+                        }
+                        scope.location = {
+                            city: response.data.city.name,
+                            country: response.data.city.country
+                        }
 
-			return $http({
-				method: 'GET',
-				url: url
-			});
-		}
-	}
-})
+                        scope.initOver = true;
+                        $rootScope.$broadcast('weatherUpdate');
+                    },
+                    function onError(response) {
+                        console.log(response)
+                    });
+
+            }
+        }
+    })
+
+    .factory('getWeatherService', function($http) {
+        return {
+            forSixDays: function(city) {
+                var cityName = city.cityName
+                var country = (typeof city.country !== 'undefined' && city.country) ? ',' + city.country : '';
+                var url = `http://api.openweathermap.org/data/2.5/forecast/daily?q=${cityName}${country}&cnt=6&units=metric&appid=${api_key}`;
+
+                return $http({
+                    method: 'GET',
+                    url: url
+                });
+            }
+        }
+    })
 
 // .factory('getDay', function(){
 // 	return {

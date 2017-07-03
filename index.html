@@ -45,7 +45,7 @@
 	                        <p class="temp"><span ng-bind="weather.today.temp.day | number:0"></span>°C</p>
 	                    </div>
 	                    <div class="right">
-	                    	<span ng-bind-html="weather.today.weather[0].id | weatherIcon"></span>
+	                    	<span class="today-condition" ng-bind-html="weather.today.weather[0].id | weatherIcon:weather.today.dt*1000"></span>
 	                    </div>
 	                </div>
 	                <ul class="forecast-list">
