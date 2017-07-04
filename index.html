@@ -9,13 +9,20 @@
         </title>
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet"/>
         <link href="css/style.css" rel="stylesheet"/>
+           
+		<script src="bower_components/angular/angular.min.js "></script>
+        <script src="bower_components/angular-translate/angular-translate.min.js "></script>
+        <script src="bower_components/angular-sanitize/angular-sanitize.min.js "></script>
+        <script src="bower_components/angular-cookies/angular-cookies.min.js "></script>
+        <script src="app/api-config.js "></script>
+        <script src="app/app.js "></script>
     </head>
     <body>
         <div ng-controller="weatherDashboardController as dashboardCtrl">
         
             <nav class="navbar">
                 <div class="container">
-                    <form class="newCityForm" name="dashboardCtrl.newCityForm" ng-submit="dashboardCtrl.addCity()">
+                    <form autofocus class="newCityForm" name="dashboardCtrl.newCityForm" ng-submit="dashboardCtrl.addCity()">
 	                    <span class="icon-search"></span>
                         <input class="search-input city-name" ng-model="dashboardCtrl.newCityFormData.newCityName" type="text" placeholder="Enter city name"></input>
                         <input class="search-input country-name" ng-model="dashboardCtrl.newCityFormData.newCityCountry" type="text" placeholder="Country code (optional)"></input>
@@ -34,6 +41,7 @@
                     <!--<button class=" fab fab-balanced pull-right ">+</button>-->
                 </div>
             </div>
+            
             <!-- weather-widget.html -->
             <script id="weather-widget.html " type="text/ng-template ">
                 <div class="weather-widget ">
@@ -42,26 +50,28 @@
 	                    <div class="left ">
 	                        <p class="city-name" ng-bind="location.city"></p>
 	                        <p class="country-name" ng-bind="location.country"></p>
-	                        <p class="temp"><span ng-bind="weather.today.temp.day | number:0"></span>°C</p>
+	                        <p class="weather-pressure"><span class="icon" data-icon="("></span> <span ng-bind="weather.today.pressure | number:0"></span> Hpa</p>
+	                        <p class="weather-wind"><span class="icon" data-icon="F"></span> <span ng-bind="weather.today.speed | number:0"></span> m/s</p>
 	                    </div>
 	                    <div class="right">
-	                    	<span class="today-condition" ng-bind-html="weather.today.weather[0].id | weatherIcon:weather.today.dt*1000"></span>
+	                        <p class="temp day-temp"><span class="today-condition" ng-bind-html="weather.today.weather[0].id | weatherIcon:false"></span><span ng-bind="weather.today.temp.day | number:0"></span>°C</p>
+		                    <p class= "min-max-temp">
+			                    <span class="temp max-temp"><span class="icon-arrow-up2"> </span> <span ng-bind="weather.today.temp.max | number:0"></span>°C</span>
+			                    <span class="temp min-temp"><span class="icon-arrow-down2"> </span> <span ng-bind="weather.today.temp.min | number:0"></span>°C</span>
+		                    </p>
+		                    <p class="temp night-temp"><span class="icon" data-icon="2"></span> <span class="xxx" ng-bind="weather.today.temp.night | number:0"></span>°C</p>
 	                    </div>
 	                </div>
 	                <ul class="forecast-list">
 	                    <li class="forecast-day" ng-repeat="dayForecast in weather.forecast track by $index">
 	                        <p class="day-name" ng-bind="dayForecast.dt*1000 | date : 'EEE'"></p>
-	                        <span ng-bind-html="dayForecast.weather[0].id | weatherIcon"></span>
+	                        <span class="forecast-icon" ng-bind-html="dayForecast.weather[0].id | weatherIcon"></span>
 	                        <p class="forecast-day-temp"><span ng-bind="dayForecast.temp.day | number:0"></span>°C</p>
 	                    </li>
 	                </ul>
 	            </div>
             </script>
-            <script src="bower_components/angular/angular.min.js "></script>
-            <script src="bower_components/angular-translate/angular-translate.js "></script>
-            <script src="bower_components/angular-sanitize/angular-sanitize.js "></script>
-            <script src="app/api-config.js "></script>
-            <script src="app/app.js "></script>
+
         </div>
     </body>
 </html>

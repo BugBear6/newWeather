@@ -1,6 +1,6 @@
-angular.module('newWeather', ['ngSanitize'])
+angular.module('newWeather', ['ngSanitize', 'ngCookies'])
 
-    .controller('weatherDashboardController', [function() {
+    .controller('weatherDashboardController', ['$cookies', function($cookies) {
         var vm = this;
 
         vm.cities = [{
@@ -33,11 +33,10 @@ angular.module('newWeather', ['ngSanitize'])
 
     }])
 
-    .filter('weatherIcon', function($sce, $filter) {
-        return function(weatherCode, dt) {
-		var H = $filter('date')(dt, 'H')
-		if(H) console.log(H)
-            var isNight = H>=19 && H<=5 ? true : false;
+    .filter('weatherIcon', function($sce) {
+        return function(weatherCode, isNight) {
+        	
+            var isNight = isNight || false;
             var template;
             var iconCode;
 
@@ -65,7 +64,6 @@ angular.module('newWeather', ['ngSanitize'])
 
             template = `<span class="icon" data-icon="${iconCode}"></span>`
             return $sce.trustAsHtml(template);
-
         }
     })
 
