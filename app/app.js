@@ -1,19 +1,32 @@
 angular.module('newWeather', ['ngSanitize', 'ngCookies'])
 
-    .controller('weatherDashboardController', ['$cookies', function($cookies) {
+    .controller('weatherDashboardController', ['$cookies', '$rootScope', function($cookies, $rootScope) {
         var vm = this;
-
-        vm.cities = [{
-            cityName: 'Madrid'
-        }, {
-            cityName: 'Barcelona'
-        }];
-
+        vm.cities = [];
         vm.newCityFormData = {};
+
+        // handle city cookie
+        var citiesCookie = $cookies.getObject('citiesCookie');
+        if (citiesCookie) {
+            vm.cities = angular.copy(citiesCookie);
+        }
+        vm.updateCityCookie = function() {
+        	console.log('saving cookie');
+            $cookies.putObject('citiesCookie', vm.cities)
+        }
+        $rootScope.$on('updateCityCookie', vm.updateCityCookie);
+
+
+        // vm.cities = [{
+        //     cityName: 'Madrid'
+        // }, {
+        //     cityName: 'Barcelona'
+        // }];
+
 
         vm.addCity = function() {
             if (!vm.newCityFormData.newCityName) {
-                return
+                return;
             }
 
             var newCity = {
@@ -25,22 +38,22 @@ angular.module('newWeather', ['ngSanitize', 'ngCookies'])
             vm.newCityForm.$setPristine();
             vm.newCityForm.$setUntouched();
             vm.newCityFormData = {};
+            $rootScope.$broadcast('updateCityCookie');
         };
 
         vm.closeWidget = function(index) {
             vm.cities.splice(index, 1);
+            $rootScope.$broadcast('updateCityCookie');
         }
 
     }])
 
     .filter('weatherIcon', function($sce) {
         return function(weatherCode, isNight) {
-        	
+
             var isNight = isNight || false;
             var template;
             var iconCode;
-
-            console.log('after broadcast', weatherCode);
 
             if (weatherCode == 800) { // clear sky
                 iconCode = isNight ? '2' : 'B';
@@ -94,7 +107,7 @@ angular.module('newWeather', ['ngSanitize', 'ngCookies'])
                         $rootScope.$broadcast('weatherUpdate');
                     },
                     function onError(response) {
-                        console.log(response)
+                        console.log('OpenWeather connection error: ', response)
                     });
 
             }
@@ -116,38 +129,6 @@ angular.module('newWeather', ['ngSanitize', 'ngCookies'])
         }
     })
 
-// .factory('getDay', function(){
-// 	return {
-// 		getDay: function(timestamp){
-// 			console.log(timestamp);
-// 			var timestamp = new Date ()
-// 		}
-// 	}
-// })
-
-//         // response.list.forEach(function(el) {
-//         //     data.push(round(el.temp.day));
-//         // });
-
-//         // response.list.forEach(function(el) {
-//         //     days.push(day(el.dt));
-//         // });
-
-//         // weather.humidity = response.list[0].humidity + "%";
-//         // weather.clouds = response.list[0].clouds + "%";
-//         // weather.pressure = response.list[0].pressure + " hPa";
-//         // weather.snow = response.list[0].snow || "brak opadów";
-//         // weather.rain = response.list[0].rain || "brak opadów";
-//         // weather.speed = response.list[0].speed + " m/s";
-
-//         // weather.day = round(response.list[0].temp.day) + "°C";
-//         // weather.max = round(response.list[0].temp.max) + "°C";
-//         // weather.min = round(response.list[0].temp.min) + "°C";
-//         // weather.night = round(response.list[0].temp.night) + "°C";
-
-//     }
-// }
-// )
 
 
 //  run server 

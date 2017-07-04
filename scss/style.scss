@@ -120,20 +120,19 @@ img {
     }
     .widget-body {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         .left {
-            flex: 2;
             p {
                 margin-bottom: 2px;
             }
         }
         .right {
             display: flex;
-            justify-content: flex-start;
+            align-items: flex-end;
             flex-direction: column;
-            flex: 1;
         }
         .today-condition {
+        	margin-right: 8px;
         	.icon:before {
         		font-size: 52px;
         	}
@@ -148,12 +147,12 @@ img {
     }
     .temp {
         font-weight: 300;
-        font-size: 18px;
+        font-size: 17px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
         &.day-temp{
-	        font-size: 41px;
+	        font-size: 40px;
         }
     }
     .min-max-temp {
@@ -192,7 +191,7 @@ img {
         }
         .forecast-icon{
         	margin-bottom: -15px;
-        	margin-top: -5px;
+        	margin-top: -7px;
         }
     }
 }
