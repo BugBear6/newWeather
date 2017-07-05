@@ -15,6 +15,7 @@
         <script src="bower_components/angular-sanitize/angular-sanitize.min.js "></script>
         <script src="bower_components/angular-cookies/angular-cookies.min.js "></script>
         <script src="app/api-config.js "></script>
+        <script src="app/randomColor.js "></script>
         <script src="app/app.js "></script>
     </head>
     <body>
@@ -44,10 +45,10 @@
             
             <!-- weather-widget.html -->
             <script id="weather-widget.html " type="text/ng-template ">
-                <div class="weather-widget ">
-	                <div class="widget-body ">
+                <div class="weather-widget" ng-style="{'background-image': 'url('+location.photoUrl+')'}">
+	                <div class="widget-body">
 					<a class="icon-cancel-circle close-widget" ng-click="closeWidget()"> </a>	                
-	                    <div class="left ">
+	                    <div class="left">
 	                        <p class="city-name" ng-bind="location.city"></p>
 	                        <p class="country-name" ng-bind="location.country"></p>
 	                        <p class="weather-pressure"><span class="icon" data-icon="("></span> <span ng-bind="weather.today.pressure | number:0"></span> Hpa</p>
