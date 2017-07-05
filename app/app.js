@@ -1,6 +1,6 @@
 angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 
-.controller('weatherDashboardController', ['$cookies', '$rootScope', 'randomColorService', function($cookies, $rootScope, randomColorService) {
+.controller('weatherDashboardController', ['$cookies', '$rootScope', function($cookies, $rootScope) {
 	var vm = this;
 	vm.cities = [];
 	vm.newCityFormData = {};
@@ -39,9 +39,6 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 		$rootScope.$broadcast('updateCityCookie');
 	}
 
-	// randomColor test
-	var col = randomColorService.getColor()
-	console.log(col);
 }])
 
 .filter('weatherIcon', function($sce) {
@@ -76,7 +73,7 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 	}
 })
 
-.directive('weatherWidget', function(getWeatherService, getFlickrPhotosSerice, $rootScope) {
+.directive('weatherWidget', function(getWeatherService, getFlickrPhotosSerice, randomColorService, $rootScope) {
 	return {
 		templateUrl: 'weather-widget.html',
 		scope: {
@@ -90,6 +87,9 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 
 					console.log('from factory to controller', response)
 
+					// randomColor
+					var col = randomColorService.getColor()
+
 					scope.weather = {
 						today: response.data.list.shift(),
 						forecast: response.data.list
@@ -97,7 +97,8 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 					scope.location = {
 						city: response.data.city.name,
 						country: response.data.city.country,
-						photoUrl: ''
+						photoUrl: '',
+						bgColor: col
 					}
 
 					scope.initOver = true;
@@ -153,7 +154,7 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 			var cityName = city.cityName;
 			var tags = `${cityName},city` // any of them, separated by coma
 			var tagsMode = 'all'; // Either 'any' for an OR combination of tags, or 'all' for an AND combination. Defaults to 'any' if not specified.
-			var url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickr_key}&text=${cityName}&tags=${tags}&tags_mode=${tagsMode}&per_page=100&format=json&nojsoncallback=1`;
+			var url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickr_key}&text=${cityName}&tags=${tags}&tags_mode=${tagsMode}&per_page=100&format=json&sort=relevance&nojsoncallback=1`;
 			return $http({
 				method: 'GET',
 				url: url

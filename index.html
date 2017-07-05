@@ -37,7 +37,7 @@
                     My places
                 </h2>
                 <div class="row widget-container">
-                    <div weather-widget ng-repeat="city in dashboardCtrl.cities" city="city" close-widget="dashboardCtrl.closeWidget($index)" >
+                    <div weather-widget ng-repeat="city in dashboardCtrl.cities" city="city" close-widget="dashboardCtrl.closeWidget($index)">
                     </div>
                     <!--<button class=" fab fab-balanced pull-right ">+</button>-->
                 </div>
@@ -45,7 +45,8 @@
             
             <!-- weather-widget.html -->
             <script id="weather-widget.html " type="text/ng-template ">
-                <div class="weather-widget" ng-style="{'background-image': 'url('+location.photoUrl+')'}">
+                <div class="weather-widget" ng-style="{'background-color': location.bgColor}">
+                	<div class="widget-bg" ng-style="{'background-image': 'url('+location.photoUrl+')'}"></div>
 	                <div class="widget-body">
 					<a class="icon-cancel-circle close-widget" ng-click="closeWidget()"> </a>	                
 	                    <div class="left">
@@ -64,6 +65,7 @@
 	                    </div>
 	                </div>
 	                <ul class="forecast-list">
+		                <div class="widget-bg" ng-style="{'background-color': location.bgColor}"></div>
 	                    <li class="forecast-day" ng-repeat="dayForecast in weather.forecast track by $index">
 	                        <p class="day-name" ng-bind="dayForecast.dt*1000 | date : 'EEE'"></p>
 	                        <span class="forecast-icon" ng-bind-html="dayForecast.weather[0].id | weatherIcon"></span>
