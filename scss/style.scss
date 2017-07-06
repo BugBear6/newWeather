@@ -50,7 +50,7 @@ img {
 }
 
 .container {
-    width: 1155px;
+    // width: 1155px;
     margin: 0 auto;
     padding-right: 15px;
     padding-left: 15px;
@@ -60,6 +60,7 @@ img {
     margin-right: -15px;
     margin-left: -15px;
 }
+
 
 .navbar {
     height: 52px;
@@ -97,7 +98,7 @@ img {
     margin-top: 5px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start;
+    justify-content: center;
 }
 
 .weather-widget {
@@ -219,3 +220,46 @@ img {
         }
     }
 }
+
+// =======================================
+// BOOTSTRAP CONTAINER AND CONTAINER @ media
+
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto
+}
+@media (min-width: 768px) {
+    .container {
+        width: 750px
+    }
+    .widget-container {
+    	justify-content: center;
+    }
+}
+@media (min-width: 992px) {
+    .container {
+        width: 770px
+    }
+    .widget-container {
+    	justify-content: flex-start;
+    }
+}
+@media (min-width: 1200px) {
+    .container {
+        width: 1170px
+    }
+}
+.container-fluid {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto
+}
+.row {
+    margin-right: -15px;
+    margin-left: -15px
+}
+
+// =======================================
