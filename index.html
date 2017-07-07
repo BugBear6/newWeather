@@ -37,7 +37,14 @@
                     My places
                 </h2>
                 <div class="row widget-container">
-                    <div weather-widget ng-repeat="city in dashboardCtrl.cities" city="city" close-widget="dashboardCtrl.closeWidget($index)">
+                    <div 
+                    	weather-widget 
+	                    ng-repeat="city in dashboardCtrl.cities" 
+	                    city="city" 
+	                    get-photo="true"
+                    	index="{{$index}}"
+	                    close-widget="dashboardCtrl.closeWidget($index)" 
+	                    refresh-widget="dashboardCtrl.refreshWidget($index)">
                     </div>
                     <!--<button class=" fab fab-balanced pull-right ">+</button>-->
                 </div>
@@ -48,11 +55,14 @@
                 <div class="weather-widget" ng-style="{'background-color': location.bgColor}">
                 	<div class="widget-bg" ng-style="{'background-image': 'url('+location.photoUrl+')'}"></div>
 	                <div class="widget-body">
-					<a class="icon-cancel-circle close-widget" ng-click="closeWidget()"> </a>	                
+						<div class="top-btns">
+							<a class="icon-cancel-circle refresh-widget" ng-click="closeWidget()"> </a>	                
+							<a class="icon-loop2 refresh-widget" ng-click="refreshWidget()"> </a>
+						</div>
 	                    <div class="left">
 	                        <p class="city-name" ng-bind="location.city"></p>
 	                        <p class="country-name" ng-bind="location.country"></p>
-	                        <p class="weather-pressure"><span class="icon" data-icon="("></span> <span ng-bind="weather.today.pressure | number:0"></span> Hpa</p>
+	                        <p class="weather-pressure"><span class="icon" data-icon="("></span> <span ng-bind="weather.today.pressure | number:0"></span> hPa</p>
 	                        <p class="weather-wind"><span class="icon" data-icon="F"></span> <span ng-bind="weather.today.speed | number:0"></span> m/s</p>
 	                    </div>
 	                    <div class="right">

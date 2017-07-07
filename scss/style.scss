@@ -31,7 +31,7 @@ body {
 }
 
 h2 {
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 img {
@@ -48,19 +48,6 @@ img {
         clear: both;
     }
 }
-
-.container {
-    // width: 1155px;
-    margin: 0 auto;
-    padding-right: 15px;
-    padding-left: 15px;
-}
-
-.row {
-    margin-right: -15px;
-    margin-left: -15px;
-}
-
 
 .navbar {
     height: 52px;
@@ -95,18 +82,23 @@ img {
 }
 
 .widget-container {
-    margin-top: 5px;
+    margin-top: 2px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
 }
 
 .weather-widget {
-	font-size: 17px;
-    width: 355px;
-    min-width: 355px;
-    height: 220px;
-    margin: 15px;
+	font-size: 18px;
+	// settings for 3 rows
+    // width: 355px; 
+    // height: 220px;
+    /////////////////////
+    // settings for 2 rows
+    width: 565px;
+    height: 261px;
+    ////////////////////
+    margin: 10px;
     background: #c1c1c1;
     border-radius: 8px;
     position: relative;
@@ -129,14 +121,29 @@ img {
     	background-color: inherit;
     	opacity: 0.7;
     }
-    .close-widget{
+    .top-btns {
     	position: absolute;
     	right: 10px;
     	top:10px;
-    	cursor: pointer;
+    	display: flex;
+    	justify-content: flex-end;
+    	flex-direction: row-reverse;
+    	a {
+	    	cursor: pointer;
+	    	margin-left: 10px;
+	    	font-size: 15px;
+	    	opacity: 0.6;
+	    	transition: 0.2s;
+	    	&:last-child{
+	    		margin-left: 0;
+	    	}
+	    	&:hover {
+		    	opacity: 0.9;	    		
+	    	}
+    	}
     }
     .widget-body {
-	    padding: 25px 30px;
+	    padding: 35px;
 	    position: relative;
         display: flex;
         justify-content: space-between;
@@ -153,40 +160,41 @@ img {
         .today-condition {
         	margin-right: 8px;
         	.icon:before {
-        		font-size: 47px;
+        		font-size: 55px;
         	}
         }
     }
     .city-name {
-        font-size: 24px;
-        font-weight: 600;
+        // font-size: 24px;
+        // font-weight: 600;
+        font-size: 35px;
     }
     .country-name {
-        font-size: 15px;
+        font-size: 17px;
         font-weight: 400;
     }
     .temp {
         font-weight: 400;
-        font-size: 17px;
+        font-size: 19px;
         display: flex;
         justify-content: flex-end;
         align-items: center;
         &.day-temp{
-	        font-size: 40px;
+	        font-size: 50px;
         }
     }
     .min-max-temp {
-        font-size: 16px;
+        font-size: 17px;
         &>span {
 			display: inline-block;
         }
     }
     .weather-pressure .icon:before{
 		font-size: 15px;
-		margin-right: 4px;
+		margin-right: 5px;
     }
     .weather-wind .icon:before{
-		font-size: 20px;
+		font-size: 22px;
     }
     .forecast-list {
         height: 80px;
