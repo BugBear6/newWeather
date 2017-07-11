@@ -33,10 +33,16 @@
                 </div>
             </nav>
             <div class="container">
-                <h2>
-                    My places
-                </h2>
-                <div class="row widget-container">
+              <div class="row widget-title-bar">
+              	<h2>
+              	    My places
+              	</h2>
+              	<div>
+              		<button ng-click="dashboardCtrl.changeView()">Change view</button>
+              	</div>
+              </div>
+
+                <div class="row widget-container" ng-class="{ 'three-rows': dashboardCtrl.view==='threeRows' }">
                     <div 
                     	weather-widget 
 	                    ng-repeat="city in dashboardCtrl.cities"

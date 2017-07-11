@@ -88,16 +88,16 @@ img {
     justify-content: center;
 }
 
+.widget-title-bar{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
 .weather-widget {
-	font-size: 18px;
-	// settings for 3 rows
-    // width: 355px; 
-    // height: 220px;
-    /////////////////////
-    // settings for 2 rows
+	font-size: 18px;	
     width: 565px;
     height: 261px;
-    ////////////////////
     margin: 10px;
     background: #c1c1c1;
     border-radius: 8px;
@@ -228,6 +228,30 @@ img {
         	margin-top: -8px;
         }
     }
+}
+
+// styles for three-rows setting
+
+.three-rows {
+	.weather-widget {
+		width: 370px;
+		height: 245px;
+		p{
+			font-size: 16px;
+		}
+		.city-name {
+		    font-size: 28px;
+		}
+		.temp {
+			font-size: 17px;
+		}
+		.temp.day-temp {
+		    font-size: 34px;
+		}
+		.widget-body .today-condition .icon:before {
+		    font-size: 37px;
+		}
+	}
 }
 
 // =======================================

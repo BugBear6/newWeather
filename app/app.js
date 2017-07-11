@@ -4,6 +4,7 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 	var vm = this;
 	vm.cities = [];
 	vm.newCityFormData = {};
+	vm.view = 'twoRows'; // options: 'twoRows', 'threeRows'
 
 	vm.innerId = 0; // for tracing intervals
 
@@ -16,6 +17,16 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 		$cookies.putObject('citiesCookie', vm.cities)
 	}
 	$rootScope.$on('updateCityCookie', vm.updateCityCookie);
+
+	// handle view cookie
+	var viewCookie = $cookies.getObject('viewCookie');
+	if (viewCookie) {
+		vm.view = angular.copy(viewCookie);
+	}
+	vm.updateViewCookie = function() {
+		$cookies.putObject('viewCookie', vm.view)
+	}
+	$rootScope.$on('updateViewCookie', vm.updateViewCookie);
 
 	// add city
 	vm.addCity = function() {
@@ -68,6 +79,14 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 		vm.cities[indexOfCityInArray] = angular.copy(vm.cities[indexOfCityInArray]);
 
 		console.log('refreshing ', vm.cities[indexOfCityInArray]);
+	}
+
+	vm.changeView = function() {
+		if(vm.view === 'twoRows') {
+			vm.view = 'threeRows';
+		} else {
+			vm.view = 'twoRows';
+		}
 	}
 }])
 
