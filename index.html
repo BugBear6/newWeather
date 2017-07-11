@@ -23,10 +23,27 @@
         
             <nav class="navbar">
                 <div class="container">
-                    <form autofocus class="newCityForm" name="dashboardCtrl.newCityForm" ng-submit="dashboardCtrl.addCity()">
+                    <form 
+	                    autofocus 
+	                    class="newCityForm" 
+	                    name="dashboardCtrl.newCityForm" 
+	                    ng-submit="dashboardCtrl.addCity()" 
+	                    ng-class="{'form-active' : isFormActive===true}">
 	                    <span class="icon-search"></span>
-                        <input class="search-input city-name" ng-model="dashboardCtrl.newCityFormData.newCityName" type="text" placeholder="Enter city name"></input>
-                        <input class="search-input country-name" ng-model="dashboardCtrl.newCityFormData.newCityCountry" type="text" placeholder="Country code (optional)"></input>
+                        <input 
+	                        class="search-input city-name" 
+	                        ng-model="dashboardCtrl.newCityFormData.newCityName" 
+	                        type="text" 
+	                        placeholder="Enter city name" 
+	                        ng-focus="isFormActive=true"
+	                        ng-blur="isFormActive=false"></input>
+                        <input 
+	                        class="search-input country-name" 
+	                        ng-model="dashboardCtrl.newCityFormData.newCityCountry" 
+	                        type="text" 
+	                        placeholder="Country code (optional)" 
+	                        ng-focus="isFormActive=true"
+	                        ng-blur="isFormActive=false"></input>
                         <input type="submit" value="submit" style="display:none">
                         </input>
                     </form>
@@ -38,7 +55,7 @@
               	    My places
               	</h2>
               	<div>
-              		<button ng-click="dashboardCtrl.changeView()">Change view</button>
+              		<button class="fab fab-calm switch-view-button" ng-click="dashboardCtrl.changeView()"><span class="icon-eye" ng-click="closeWidget()"> </span>	 </button>
               	</div>
               </div>
 

@@ -19,12 +19,12 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 	$rootScope.$on('updateCityCookie', vm.updateCityCookie);
 
 	// handle view cookie
-	var viewCookie = $cookies.getObject('viewCookie');
+	var viewCookie = $cookies.get('viewCookie');
 	if (viewCookie) {
 		vm.view = angular.copy(viewCookie);
 	}
 	vm.updateViewCookie = function() {
-		$cookies.putObject('viewCookie', vm.view)
+		$cookies.put('viewCookie', vm.view)
 	}
 	$rootScope.$on('updateViewCookie', vm.updateViewCookie);
 
@@ -55,7 +55,6 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 
 	// close widget
 	vm.closeWidget = function(innerId) {
-
 		// find city in cityList by its innerId
 		var widgetToClose = vm.cities.filter(function(el) {
 			return el.innerId === innerId;
@@ -87,6 +86,7 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 		} else {
 			vm.view = 'twoRows';
 		}
+		$rootScope.$broadcast('updateViewCookie');
 	}
 }])
 
