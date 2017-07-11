@@ -39,12 +39,10 @@
                 <div class="row widget-container">
                     <div 
                     	weather-widget 
-	                    ng-repeat="city in dashboardCtrl.cities" 
+	                    ng-repeat="city in dashboardCtrl.cities"
 	                    city="city" 
-	                    get-photo="true"
-                    	index="{{$index}}"
-	                    close-widget="dashboardCtrl.closeWidget($index)" 
-	                    refresh-widget="dashboardCtrl.refreshWidget($index)">
+	                    close-widget="dashboardCtrl.closeWidget(city.innerId)" 
+	                    refresh-widget="dashboardCtrl.refreshWidget(city.innerId)">
                     </div>
                     <!--<button class=" fab fab-balanced pull-right ">+</button>-->
                 </div>

@@ -1,10 +1,11 @@
 angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 
-.controller('weatherDashboardController', ['$cookies', '$rootScope', '$interval', '$timeout', function($cookies, $rootScope, $interval, $timeout) {
+.controller('weatherDashboardController', ['$cookies', '$rootScope', '$interval', '$timeout', function($cookies, $rootScope, $interval) {
 	var vm = this;
 	vm.cities = [];
-	$rootScope.intervals = [];
 	vm.newCityFormData = {};
+
+	vm.innerId = 0; // for tracing intervals
 
 	// handle city cookie
 	var citiesCookie = $cookies.getObject('citiesCookie');
@@ -24,7 +25,12 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 
 		var newCity = {
 			cityName: vm.newCityFormData.newCityName,
-			country: vm.newCityFormData.newCityCountry
+			country: vm.newCityFormData.newCityCountry,
+			innerId: vm.innerId,
+			// refresh weather-widget every hour
+			interval: $interval(function(innerId) {
+				vm.refreshWidget(innerId);
+			}, 3600000, 0, true, this.innerId)
 		}
 		vm.cities.push(newCity);
 
@@ -32,35 +38,37 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 		vm.newCityForm.$setUntouched();
 		vm.newCityFormData = {};
 		$rootScope.$broadcast('updateCityCookie');
+
+		vm.innerId++;
 	};
 
 	// close widget
-	vm.closeWidget = function(index) {
-		console.log('$rootScope on close', $rootScope);
+	vm.closeWidget = function(innerId) {
+
+		// find city in cityList by its innerId
+		var widgetToClose = vm.cities.filter(function(el) {
+			return el.innerId === innerId;
+		})[0];
+		var indexOfCityInArray = vm.cities.indexOf(widgetToClose);
+
+		// cancel running interval
+		$interval.cancel(widgetToClose.interval);
 		// remove city from cities array
-		vm.cities.splice(index, 1);
+		vm.cities.splice(indexOfCityInArray, 1);
 		// update cookie file
 		$rootScope.$broadcast('updateCityCookie');
-		// cancel running interval
-		$interval.cancel($rootScope.intervals[index]);
-		$rootScope.intervals.splice(index, 1);
-		$timeout(function() {
-			$rootScope.$apply();
-		}, 250)
 	}
 
 	// refresh widget
-	vm.refreshWidget = function(index) {
-		vm.cities[index] = angular.copy(vm.cities[index]);
+	vm.refreshWidget = function(innerId) {
+		var widgetToRefresh = vm.cities.filter(function(el) {
+			return el.innerId === innerId;
+		})[0];
+		var indexOfCityInArray = vm.cities.indexOf(widgetToRefresh);
+		vm.cities[indexOfCityInArray] = angular.copy(vm.cities[indexOfCityInArray]);
+
+		console.log('refreshing ', vm.cities[indexOfCityInArray]);
 	}
-
-	$rootScope.$watch($rootScope.intervals, function(){
-		$timeout(function() {
-			console.log('apply');
-			$rootScope.$apply();
-		}, 100);
-	}, true);
-
 }])
 
 .filter('weatherIcon', function($sce) {
@@ -95,26 +103,19 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 	}
 })
 
-.directive('weatherWidget', function(getWeatherService, getFlickrPhotosSerice, randomColorService, $rootScope, $interval) {
+.directive('weatherWidget', function(getWeatherService, getFlickrPhotosSerice, randomColorService, $rootScope) {
 	return {
 		templateUrl: 'weather-widget.html',
 		scope: {
 			city: '=',
-			index: '@',
-			getPhoto: '@',
 			closeWidget: '&',
 			refreshWidget: '&',
 		},
 		link: function(scope, elem, attrs) {
 			// init widget
-			getWeather(scope.getPhoto);
+			getWeather();
 
-			// auto refresh widget
-			$rootScope.intervals[scope.index] = $interval(function() {
-				getWeather(false);
-			}, 8000);
-
-			function getWeather(getPhoto) {
+			function getWeather() {
 				getWeatherService.forSixDays(scope.city).then(
 					function onSuccess(response) {
 						console.log('from factory to controller', response)
@@ -125,46 +126,40 @@ angular.module('newWeather', ['randomColor', 'ngSanitize', 'ngCookies'])
 							forecast: response.data.list
 						}
 
-						if (getPhoto === 'true') {
-							// randomColor
-							// set location, color and photo data only on the first run
-							col = randomColorService.getColor();
-							scope.location = {
-								city: response.data.city.name,
-								country: response.data.city.country,
-								bgColor: col,
-								photoUrl: ''
-							}
+						// randomColor
+						// set location, color and photo data only on the first run
+						col = randomColorService.getColor();
+						scope.location = {
+							city: response.data.city.name,
+							country: response.data.city.country,
+							bgColor: col,
+							photoUrl: ''
 						}
 
 						$rootScope.$broadcast('weatherUpdate');
 
-						if (getPhoto === 'true') {
-							// get city photos 
-							// set location, color and photo data only on the first run
-							getFlickrPhotosSerice.getCity(scope.city)
-								.then(function onSuccess(response) {
-									console.log('photo', response);
-									var photos = response.data.photos.photo,
-										photoNumber = Math.floor((Math.random() * photos.length) + 1) - 1,
-										photo = photos[photoNumber];
+						// get city photos 
+						// set location, color and photo data only on the first run
+						getFlickrPhotosSerice.getCity(scope.city)
+							.then(function onSuccess(response) {
+								console.log('photo', response);
+								var photos = response.data.photos.photo,
+									photoNumber = Math.floor((Math.random() * photos.length) + 1) - 1,
+									photo = photos[photoNumber];
 
-									var farmId = photo.farm,
-										serverId = photo.server,
-										id = photo.id,
-										secret = photo.secret,
-										size = 'c';
+								var farmId = photo.farm,
+									serverId = photo.server,
+									id = photo.id,
+									secret = photo.secret,
+									size = 'c';
 
-									var photoUrl = `https://farm${farmId}.staticflickr.com/${serverId}/${id}_${secret}_${size}.jpg`;
-									scope.location.photoUrl = photoUrl;
+								var photoUrl = `https://farm${farmId}.staticflickr.com/${serverId}/${id}_${secret}_${size}.jpg`;
+								scope.location.photoUrl = photoUrl;
 
-								}, function onError(response) {
-									console.log('Flickr API error: ', response)
-								});
+							}, function onError(response) {
+								console.log('Flickr API error: ', response)
+							});
 
-							// prevents from setting location data again on the interval
-							scope.getPhoto = false;
-						}
 					},
 					function onError(response) {
 						console.log('OpenWeather connection error: ', response)
