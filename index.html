@@ -1,111 +1,121 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="newWeather">
-    <head>
-        <meta charset="utf-8"/>
-        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-        <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-        <title>
-            newWeather
-        </title>
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet"/>
-        <link href="css/style.css" rel="stylesheet"/>
-           
-		<script src="bower_components/angular/angular.min.js "></script>
-        <script src="bower_components/angular-translate/angular-translate.min.js "></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.min.js "></script>
-        <script src="bower_components/angular-cookies/angular-cookies.min.js "></script>
-        <script src="app/api-config.js "></script>
-        <script src="app/randomColor.js "></script>
-        <script src="app/app.js "></script>
-    </head>
-    <body>
-        <div ng-controller="weatherDashboardController as dashboardCtrl">
-        
-            <nav class="navbar">
-                <div class="container">
-                    <form 
-	                    autofocus 
-	                    class="newCityForm" 
-	                    name="dashboardCtrl.newCityForm" 
-	                    ng-submit="dashboardCtrl.addCity()" 
-	                    ng-class="{'form-active' : isFormActive===true}">
-	                    <span class="icon-search"></span>
-                        <input 
-	                        class="search-input city-name" 
-	                        ng-model="dashboardCtrl.newCityFormData.newCityName" 
-	                        type="text" 
-	                        placeholder="Enter city name" 
-	                        ng-focus="isFormActive=true"
-	                        ng-blur="isFormActive=false"></input>
-                        <input 
-	                        class="search-input country-name" 
-	                        ng-model="dashboardCtrl.newCityFormData.newCityCountry" 
-	                        type="text" 
-	                        placeholder="Country code (optional)" 
-	                        ng-focus="isFormActive=true"
-	                        ng-blur="isFormActive=false"></input>
-                        <input type="submit" value="submit" style="display:none">
-                        </input>
-                    </form>
-                </div>
-            </nav>
-            <div class="container">
-              <div class="row widget-title-bar">
-              	<h2>
-              	    My places
-              	</h2>
-              	<div>
-              		<button class="fab fab-calm switch-view-button" ng-click="dashboardCtrl.changeView()"><span class="icon-eye" ng-click="closeWidget()"> </span>	 </button>
-              	</div>
-              </div>
 
-                <div class="row widget-container" ng-class="{ 'three-rows': dashboardCtrl.view==='threeRows' }">
-                    <div 
-                    	weather-widget 
-	                    ng-repeat="city in dashboardCtrl.cities"
-	                    city="city" 
-	                    close-widget="dashboardCtrl.closeWidget(city.innerId)" 
-	                    refresh-widget="dashboardCtrl.refreshWidget(city.innerId)">
-                    </div>
-                    <!--<button class=" fab fab-balanced pull-right ">+</button>-->
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+    <title>
+        newWeather
+    </title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic" rel="stylesheet" />
+    <link href="css/style.css" rel="stylesheet" />
+
+    <script src="bower_components/angular/angular.min.js "></script>
+    <script src="bower_components/angular-translate/angular-translate.min.js "></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js "></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js "></script>
+    <script src="app/api-config.js "></script>
+    <script src="app/switch-toggle-button/switch-toggle.js "></script>
+    <script src="app/randomColor.js "></script>
+    <script src="app/app.js "></script>
+</head>
+
+<body>
+    <div ng-controller="weatherDashboardController as dashboardCtrl">
+
+        <nav class="navbar">
+            <div class="container">
+				<form autofocus 
+					class="newCityForm" 
+					name="dashboardCtrl.newCityForm" 
+					ng-submit="dashboardCtrl.addCity()" 
+					ng-class="{'form-active' : isFormActive===true}">
+                    <span class="icon-search"></span>
+					<input 
+						class="search-input city-name" 
+						ng-model="dashboardCtrl.newCityFormData.newCityName" 
+						type="text" 
+						placeholder="Enter city name" 
+						ng-focus="isFormActive=true" ng-blur="isFormActive=false"></input>
+					<input 
+						class="search-input country-name" 
+						ng-model="dashboardCtrl.newCityFormData.newCityCountry" 
+						type="text" 
+						placeholder="Country code (optional)" 
+						ng-focus="isFormActive=true" 
+						ng-blur="isFormActive=false">
+					</input>
+                    <input type="submit" value="submit" style="display:none">
+                    </input>
+                </form>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row widget-title-bar">
+                <h2>
+                    My places
+                </h2>
+                <div>
+                    <button class="fab fab-calm switch-view-button" ng-click="dashboardCtrl.changeView()"><span class="icon-eye"></span></button>
+					<switch-toggle 
+						normal-color="gray" 
+						checked-color="lightcoral"
+						false-value="twoRows"
+						true-value="threeRows"
+						change-value="dashboardCtrl.view">
+					</switch-toggle>
                 </div>
             </div>
-            
-            <!-- weather-widget.html -->
-            <script id="weather-widget.html " type="text/ng-template ">
-                <div class="weather-widget" ng-style="{'background-color': location.bgColor}">
-                	<div class="widget-bg" ng-style="{'background-image': 'url('+location.photoUrl+')'}"></div>
-	                <div class="widget-body">
-						<div class="top-btns">
-							<a class="icon-cancel-circle refresh-widget" ng-click="closeWidget()"> </a>	                
-							<a class="icon-loop2 refresh-widget" ng-click="refreshWidget()"> </a>
-						</div>
-	                    <div class="left">
-	                        <p class="city-name" ng-bind="location.city"></p>
-	                        <p class="country-name" ng-bind="location.country"></p>
-	                        <p class="weather-pressure"><span class="icon" data-icon="("></span> <span ng-bind="weather.today.pressure | number:0"></span> hPa</p>
-	                        <p class="weather-wind"><span class="icon" data-icon="F"></span> <span ng-bind="weather.today.speed | number:0"></span> m/s</p>
-	                    </div>
-	                    <div class="right">
-	                        <p class="temp day-temp"><span class="today-condition" ng-bind-html="weather.today.weather[0].id | weatherIcon:false"></span><span ng-bind="weather.today.temp.day | number:0"></span>°C</p>
-		                    <p class= "min-max-temp">
-			                    <span class="temp max-temp"><span class="icon-arrow-up2"> </span> <span ng-bind="weather.today.temp.max | number:0"></span>°C</span>
-			                    <span class="temp min-temp"><span class="icon-arrow-down2"> </span> <span ng-bind="weather.today.temp.min | number:0"></span>°C</span>
-		                    </p>
-		                    <p class="temp night-temp"><span class="icon" data-icon="2"></span> <span class="xxx" ng-bind="weather.today.temp.night | number:0"></span>°C</p>
-	                    </div>
-	                </div>
-	                <ul class="forecast-list">
-		                <div class="widget-bg" ng-style="{'background-color': location.bgColor}"></div>
-	                    <li class="forecast-day" ng-repeat="dayForecast in weather.forecast track by $index">
-	                        <p class="day-name" ng-bind="dayForecast.dt*1000 | date : 'EEE'"></p>
-	                        <span class="forecast-icon" ng-bind-html="dayForecast.weather[0].id | weatherIcon"></span>
-	                        <p class="forecast-day-temp"><span ng-bind="dayForecast.temp.day | number:0"></span>°C</p>
-	                    </li>
-	                </ul>
-	            </div>
-            </script>
 
+            <div class="row widget-container" ng-class="{ 'three-rows': dashboardCtrl.view==='threeRows' }">
+				<div 
+					weather-widget 
+					ng-repeat="city in dashboardCtrl.cities" 
+					city="city" 
+					close-widget="dashboardCtrl.closeWidget(city.innerId)" 
+					refresh-widget="dashboardCtrl.refreshWidget(city.innerId)">
+                </div>
+                <!--<button class=" fab fab-balanced pull-right ">+</button>-->
+            </div>
         </div>
-    </body>
+
+        <!-- weather-widget.html -->
+        <script id="weather-widget.html " type="text/ng-template ">
+            <div class="weather-widget" ng-style="{'background-color': location.bgColor}">
+                <div class="widget-bg" ng-style="{'background-image': 'url('+location.photoUrl+')'}"></div>
+                <div class="widget-body">
+                    <div class="top-btns">
+                        <a class="icon-cancel-circle refresh-widget" ng-click="closeWidget()"> </a>
+                        <a class="icon-loop2 refresh-widget" ng-click="refreshWidget()"> </a>
+                    </div>
+                    <div class="left">
+                        <p class="city-name" ng-bind="location.city"></p>
+                        <p class="country-name" ng-bind="location.country"></p>
+                        <p class="weather-pressure"><span class="icon" data-icon="("></span> <span ng-bind="weather.today.pressure | number:0"></span> hPa</p>
+                        <p class="weather-wind"><span class="icon" data-icon="F"></span> <span ng-bind="weather.today.speed | number:0"></span> m/s</p>
+                    </div>
+                    <div class="right">
+                        <p class="temp day-temp"><span class="today-condition" ng-bind-html="weather.today.weather[0].id | weatherIcon:false"></span><span ng-bind="weather.today.temp.day | number:0"></span>°C</p>
+                        <p class="min-max-temp">
+                            <span class="temp max-temp"><span class="icon-arrow-up2"> </span> <span ng-bind="weather.today.temp.max | number:0"></span>°C</span>
+                            <span class="temp min-temp"><span class="icon-arrow-down2"> </span> <span ng-bind="weather.today.temp.min | number:0"></span>°C</span>
+                        </p>
+                        <p class="temp night-temp"><span class="icon" data-icon="2"></span> <span class="xxx" ng-bind="weather.today.temp.night | number:0"></span>°C</p>
+                    </div>
+                </div>
+                <ul class="forecast-list">
+                    <div class="widget-bg" ng-style="{'background-color': location.bgColor}"></div>
+                    <li class="forecast-day" ng-repeat="dayForecast in weather.forecast track by $index">
+                        <p class="day-name" ng-bind="dayForecast.dt*1000 | date : 'EEE'"></p>
+                        <span class="forecast-icon" ng-bind-html="dayForecast.weather[0].id | weatherIcon"></span>
+                        <p class="forecast-day-temp"><span ng-bind="dayForecast.temp.day | number:0"></span>°C</p>
+                    </li>
+                </ul>
+            </div>
+        </script>
+
+    </div>
+</body>
+
 </html>
