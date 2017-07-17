@@ -271,7 +271,7 @@ angular.module('newWeather', [
             for (var i = 0; i < 9; i++)
                 text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-            return text;
+            return text.substring(0, 8);
         }
     })
 
