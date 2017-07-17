@@ -57,18 +57,18 @@
                     My places
                 </h2>
                 <div>
-                    <button class="fab fab-calm switch-view-button" ng-click="dashboardCtrl.changeView()"><span class="icon-eye"></span></button>
-					<switch-toggle 
-						normal-color="gray" 
-						checked-color="lightcoral"
-						false-value="twoRows"
-						true-value="threeRows"
-						change-value="dashboardCtrl.view">
+                    <switch-toggle 
+                        normal-color="gray" 
+                        checked-color="lightcoral"
+                        false-value="twoRows"
+                        true-value="threeRows"                        
+                        change-value="dashboardCtrl.view"
+                        on-change="dashboardCtrl.changeView()">
 					</switch-toggle>
                 </div>
             </div>
 
-            <div class="row widget-container" ng-class="{ 'three-rows': dashboardCtrl.view==='threeRows' }">
+            <div class="row widget-container" ng-class="{ 'three-rows': dashboardCtrl.view.rows === 'threeRows' }">
 				<div 
 					weather-widget 
 					ng-repeat="city in dashboardCtrl.cities" 

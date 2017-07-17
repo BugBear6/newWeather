@@ -9,13 +9,15 @@ angular.module('newWeather', [
         var vm = this;
         vm.cities = [];
         vm.newCityFormData = {};
-        vm.view = 'twoRows'; // options: 'twoRows', 'threeRows'
+        vm.view = {
+            rows: 'twoRows' // options: 'twoRows', 'threeRows'
+        };
 
         var intervalTime = 3600000;
 
         // get cookies
         var citiesCookie = $cookies.getObject('citiesCookie');
-        var viewCookie = $cookies.get('viewCookie');
+        var viewCookie = $cookies.getObject('viewCookie');
 
         // retrieves city object from vm.cities list
         vm.getCity = function (innerId) {
@@ -55,7 +57,7 @@ angular.module('newWeather', [
         }
 
         vm.updateViewCookie = function () {
-            $cookies.put('viewCookie', vm.view)
+            $cookies.putObject('viewCookie', vm.view)
         }
 
         $rootScope.$on('updateViewCookie', vm.updateViewCookie);
@@ -113,14 +115,23 @@ angular.module('newWeather', [
             console.log('refreshing ', vm.cities[cityIndex].cityName);
         }
 
+        // ==============================
+        // handle change view
+
+        // vm.changeView = function () {
+        //     if (vm.view === 'twoRows') {
+        //         vm.view = 'threeRows';
+        //     } else {
+        //         vm.view = 'twoRows';
+        //     }
+        //     $rootScope.$broadcast('updateViewCookie');
+        // }
+        
         vm.changeView = function () {
-            if (vm.view === 'twoRows') {
-                vm.view = 'threeRows';
-            } else {
-                vm.view = 'twoRows';
-            }
             $rootScope.$broadcast('updateViewCookie');
+            $rootScope.$apply();
         }
+
     }])
 
     .filter('weatherIcon', function ($sce) {
