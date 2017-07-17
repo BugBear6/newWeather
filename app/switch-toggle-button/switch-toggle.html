@@ -1,11 +1,9 @@
-<label for="check" class="switch-toggle">
+<label for="{{name}}" class="switch-toggle">
     <input 
-        id="check" 
-        name="check"
-        ng-true-value=""
-        ng-false-value=""
+        id="{{name}}" 
+        name="{{name}}"
         type="checkbox"
-        ng-checked="changeValue.rows === trueValue"
+        ng-checked="model[key] === trueValue"
         >
     <span></span>
 </label>

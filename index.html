@@ -57,12 +57,14 @@
                     My places
                 </h2>
                 <div>
-                    <switch-toggle 
+                    <switch-toggle
+                        name="viewSwitcher"
                         normal-color="gray" 
                         checked-color="lightcoral"
                         false-value="twoRows"
-                        true-value="threeRows"                        
-                        change-value="dashboardCtrl.view"
+                        true-value="threeRows"                   
+                        model="dashboardCtrl.view"
+                        switch-model-key="rows"
                         on-change="dashboardCtrl.changeView()">
 					</switch-toggle>
                 </div>

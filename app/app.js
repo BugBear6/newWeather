@@ -116,17 +116,7 @@ angular.module('newWeather', [
         }
 
         // ==============================
-        // handle change view
-
-        // vm.changeView = function () {
-        //     if (vm.view === 'twoRows') {
-        //         vm.view = 'threeRows';
-        //     } else {
-        //         vm.view = 'twoRows';
-        //     }
-        //     $rootScope.$broadcast('updateViewCookie');
-        // }
-        
+        // handle change view        
         vm.changeView = function () {
             $rootScope.$broadcast('updateViewCookie');
             $rootScope.$apply();
@@ -181,7 +171,7 @@ angular.module('newWeather', [
                 function getWeather() {
                     getWeatherService.forSixDays(scope.city).then(
                         function onSuccess(response) {
-                            console.log('from factory to controller', response)
+                            console.log('response', response)
                             var col;
 
                             scope.weather = {
@@ -205,7 +195,7 @@ angular.module('newWeather', [
                             // set location, color and photo data only on the first run
                             getFlickrPhotoService.getCity(scope.city)
                                 .then(function onSuccess(response) {
-                                    console.log('photo', response);
+                                    // console.log('photo', response);
                                     var photos = response.data.photos.photo,
                                         photoNumber = Math.floor((Math.random() * photos.length) + 1) - 1,
                                         photo = photos[photoNumber];
