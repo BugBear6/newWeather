@@ -2,12 +2,21 @@ describe('SwitchToggle test', () => {
 
     beforeEach(module('switchToggle'));
 
-    var scope, element;
+    var scope, element, model, key;
 
     beforeEach(inject(($rootScope, $compile) => {
         scope = $rootScope.$new();
 
         scope.name = 'switchView';
+
+        scope.trueValue = 'threeRows';
+        scope.key = 'rows';
+        scope.model = {
+            rows: 'threeRows'
+        };
+
+        key = scope.key;
+        model = scope.model;
 
         element = angular.element(`
             <label for="{{name}}" class="switch-toggle">
@@ -40,7 +49,10 @@ describe('SwitchToggle test', () => {
 
     describe('Check `checked` status', () => {
         it('should be checked', () => {
-
+            expect(model[key] === scope.trueValue).toBe(true);
+        });
+        it('should not be checked', () => {
+            expect(model[key] === 'twoValues').not.toBe(true);
         });
     });
 
