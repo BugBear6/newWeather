@@ -254,13 +254,15 @@ angular.module('newWeather', [
     })
 
     .service('makeIdService', function () {
-        var text = "";
-        var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
+        
         this.makeId = function () {
-            for (var i = 0; i < 9; i++)
-                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            
+            var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+            for (var i = 0; i < 9; i++) {
+                text += possible.charAt(Math.floor(Math.random() * possible.length));
+            }
             return text.substring(0, 8);
         }
     })
