@@ -1,9 +1,12 @@
-.switch-toggle {
+.switch-toggle-container {
+	width: 45px;
+	height: 23px;
+}
+
+label.switch-toggle {
     width: 45px;
-    margin-top: 50px;
-    margin-left: 50px;
     position: relative;
-    display: inline-block;
+    display: block;
     cursor: pointer;
     input[type="checkbox"] {
         display: none;

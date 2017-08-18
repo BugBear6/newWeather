@@ -31,13 +31,14 @@
 					name="dashboardCtrl.newCityForm" 
 					ng-submit="dashboardCtrl.addCity()" 
 					ng-class="{'form-active' : isFormActive===true}">
-                    <span class="icon-search"></span>
+                    <span class="icon-search">
+                    </span>
 					<input 
 						class="search-input city-name" 
 						ng-model="dashboardCtrl.newCityFormData.newCityName" 
 						type="text" 
 						placeholder="Enter city name" 
-						ng-focus="isFormActive=true" ng-blur="isFormActive=false"></input>
+						ng-focus="isFormActive=true" ng-blur="isFormActive=false">
 					<input 
 						class="search-input country-name" 
 						ng-model="dashboardCtrl.newCityFormData.newCityCountry" 
@@ -45,9 +46,7 @@
 						placeholder="Country code (optional)" 
 						ng-focus="isFormActive=true" 
 						ng-blur="isFormActive=false">
-					</input>
                     <input type="submit" value="submit" style="display:none">
-                    </input>
                 </form>
             </div>
         </nav>
@@ -56,18 +55,17 @@
                 <h2>
                     My places
                 </h2>
-                <div>
-                    <switch-toggle
-                        name="viewSwitcher"
-                        normal-color="gray" 
-                        checked-color="lightcoral"
-                        false-value="twoRows"
-                        true-value="threeRows"                   
-                        model="dashboardCtrl.view"
-                        switch-model-key="rows"
-                        on-change="dashboardCtrl.changeView()">
-					</switch-toggle>
-                </div>
+                <div switch-toggle 
+                	class="switch-toggle-container"
+                    name="viewSwitcher"
+                    normal-color="gray" 
+                    checked-color="lightcoral"
+                    false-value="twoRows"
+                    true-value="threeRows"                   
+                    model="dashboardCtrl.view"
+                    switch-model-key="rows"
+                    on-change="dashboardCtrl.changeView()">
+				</div>
             </div>
 
             <div class="row widget-container" ng-class="{ 'three-rows': dashboardCtrl.view.rows === 'threeRows' }">
@@ -78,7 +76,6 @@
 					close-widget="dashboardCtrl.closeWidget(city.innerId)" 
 					refresh-widget="dashboardCtrl.refreshWidget(city.innerId)">
                 </div>
-                <!--<button class=" fab fab-balanced pull-right ">+</button>-->
             </div>
         </div>
 
