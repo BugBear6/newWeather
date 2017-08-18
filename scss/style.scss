@@ -63,12 +63,35 @@ img {
         width: 100%;
         height: 40px;
         font-size: 18px;
-        padding: 0px 10px 0px 35px;
+	    padding: 0px 10px 0px 5px;
+        @media (max-width: 768px) {
+        	height: 35px;
+        	font-size: 15px;
+	    }
         &.city-name {
+	        padding: 0px 10px 0px 35px;
             flex: 4;
+            @media (max-width: 768px) {
+            	flex: 2;
+            }
         }
         &.country-name {
             flex: 1;
+            // @media (max-width:1200px) {
+
+            //     &::-webkit-input-placeholder { /* WebKit browsers */
+            //         color: transparent;
+            //     }
+            //     &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+            //        color: transparent;
+            //     }
+            //     &::-moz-placeholder { /* Mozilla Firefox 19+ */
+            //        color: transparent;
+            //     }
+            //     &:-ms-input-placeholder { /* Internet Explorer 10+ */
+            //        color: transparent;
+            //     }
+            // }
         }
     }
     .icon-search {
@@ -84,20 +107,37 @@ img {
     margin-top: 2px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
+    @media (max-width: 1200px) {
+	    justify-content: center;
+    }
+    @media (max-width: 1200px) {
+    	width: 100%;
+    }
 }
 
 .widget-title-bar {
-	margin-top: 10px;
+	margin-top: 15px;
     display: flex;
     justify-content: space-between;
 	align-items: center;
+	@media (max-width: 1200px) {
+		display: none;
+	}
+}
+
+.weather-widget-container {
+	@media (max-width: 768px) {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
 }
 
 .weather-widget {
     font-size: 18px;
     width: 565px;
-    height: 261px;
+    height: 290px;
     margin: 10px;
     background: #c1c1c1;
     border-radius: 8px;
@@ -164,8 +204,6 @@ img {
         }
     }
     .city-name {
-        // font-size: 24px;
-        // font-weight: 600;
         font-size: 35px;
         margin-bottom: 0;
     }
@@ -225,6 +263,9 @@ img {
         .forecast-icon {
             margin-bottom: -17px;
             margin-top: -8px;
+            .icon:before {
+            	font-size: 30px;
+            }
         }
     }
 }
@@ -245,7 +286,7 @@ img {
             font-size: 16px;
         }
         .top-btns a {
-            font-size: 14px;
+            font-size: 15px;
         }
         .city-name {
             font-size: 25px;
@@ -275,30 +316,100 @@ img {
     }
 }
 
+
+@media (max-width: 1200px) {
+	.weather-widget,
+	.three-rows .weather-widget {
+        font-size: 15px;
+	    width: 565px;
+	    p {
+	        font-size: 18px;
+	    }
+	    .top-btns a {
+	        font-size: 15px;
+	    }
+	    .city-name {
+	        font-size: 35px;
+	    }
+	    .country-name {
+	        padding-bottom: 0;
+	    }
+	    .temp {
+	        font-size: 19px;
+	    }
+	    .temp.day-temp {
+	        font-size: 50px;
+	        margin-bottom: 0;
+	    }
+	    .forecast-list {
+	        padding: 0 35px;
+	    	.forecast-icon .icon:before {
+	    		font-size: 30px;
+	    	}
+	    }
+	    .widget-body {
+	        padding: 30px 26px;
+	        .today-condition .icon:before {
+	           font-size: 55px
+	        }
+	    }
+	}
+}
+
+@media (max-width: 490px) {
+	.weather-widget .city-name, 
+	.three-rows .weather-widget .city-name {
+		font-size: 23px;
+	    line-height: 23px;
+	}
+	.weather-widget .temp.day-temp, 
+	.three-rows .weather-widget .temp.day-temp {
+		font-size: 30px;
+	}
+	.weather-widget p, 
+	.three-rows .weather-widget p {
+		font-size: 15px;
+	}
+	.weather-widget .widget-body .today-condition .icon:before, 
+	.three-rows .weather-widget .widget-body .today-condition .icon:before {
+		font-size: 34px;
+	}
+	.weather-widget .forecast-list .forecast-icon .icon:before, 
+	.three-rows .weather-widget .forecast-list .forecast-icon .icon:before {
+		font-size: 25px;
+	}
+	.weather-widget .forecast-list, .three-rows .weather-widget .forecast-list {
+		padding: 0 8px;
+	}
+	.weather-widget .widget-body, .three-rows .weather-widget .widget-body {
+		padding: 30px 15px;
+	}
+	.weather-widget .min-max-temp>span {
+		display: block;
+	}
+}
+
 // =======================================
 // BOOTSTRAP CONTAINER AND CONTAINER @ media
 .container {
     padding-right: 15px;
     padding-left: 15px;
     margin-right: auto;
-    margin-left: auto
+    margin-left: auto;
+    @media (max-width: 768px) {
+    width: 100%;
+	}
 }
 
 @media (min-width: 768px) {
     .container {
         width: 750px
     }
-    .widget-container {
-        justify-content: center;
-    }
 }
 
 @media (min-width: 992px) {
     .container {
         width: 770px
-    }
-    .widget-container {
-        justify-content: flex-start;
     }
 }
 
@@ -317,7 +428,12 @@ img {
 
 .row {
     margin-right: -15px;
-    margin-left: -15px
+    margin-left: -15px;
+	@media (max-width: 768px) {
+	margin-right: 0;
+	margin-left: 0;
+	}
 }
+
 
 // =======================================

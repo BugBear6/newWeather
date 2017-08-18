@@ -14,8 +14,6 @@
   "dependencies": {
     "angular": "1.5",
     "angular-mocks": "1.5",
-    "angular-translate": "^2.15.2",
-    "angular-animate": "1.5",
     "angular-sanitize": "1.5",
     "angular-cookies": "1.5"
   }

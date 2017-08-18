@@ -1,6 +1,9 @@
 .switch-toggle-container {
 	width: 45px;
 	height: 23px;
+	@media (max-width: 1200px) {
+		display: none;
+	}
 }
 
 label.switch-toggle {
@@ -11,7 +14,7 @@ label.switch-toggle {
     input[type="checkbox"] {
         display: none;
         &:checked+span {
-            background: lightcoral;
+            background: seagreen;
             &:after {
                 transform: translateX(22px);
             }
@@ -26,7 +29,7 @@ label.switch-toggle {
         left: 0;
         bottom: 0;
         top: 0;
-        transition: 0.3s;
+        transition: 0.4s;
         &:after {
             content: '';
             position: absolute;

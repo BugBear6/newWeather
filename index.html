@@ -12,7 +12,6 @@
     <link href="css/style.css" rel="stylesheet" />
 
     <script src="bower_components/angular/angular.min.js "></script>
-    <script src="bower_components/angular-translate/angular-translate.min.js "></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js "></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js "></script>
     <script src="app/api-config.js "></script>
@@ -43,7 +42,7 @@
 						class="search-input country-name" 
 						ng-model="dashboardCtrl.newCityFormData.newCityCountry" 
 						type="text" 
-						placeholder="Country code (optional)" 
+						placeholder="Country" 
 						ng-focus="isFormActive=true" 
 						ng-blur="isFormActive=false">
                     <input type="submit" value="submit" style="display:none">
@@ -70,7 +69,8 @@
 
             <div class="row widget-container" ng-class="{ 'three-rows': dashboardCtrl.view.rows === 'threeRows' }">
 				<div 
-					weather-widget 
+					weather-widget
+					class="weather-widget-container"
 					ng-repeat="city in dashboardCtrl.cities" 
 					city="city" 
 					close-widget="dashboardCtrl.closeWidget(city.innerId)" 
