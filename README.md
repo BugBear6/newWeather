@@ -10,10 +10,10 @@
    
 ## Picures
    
-Three rows view:   
+Three columns view:   
 ![Three rows view](https://raw.githubusercontent.com/BugBear6/newWeather/master/print_screen_v1.jpg)   
    
-Two rows view:  
+Two columns view:  
 ![Two rows view](https://raw.githubusercontent.com/BugBear6/newWeather/master/print_screen_v2.jpg)   
    
 Mobile view:   
