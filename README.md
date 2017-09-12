@@ -2,7 +2,7 @@
 **Weather broadcast in AngularJS**
 
 ## App features
-* Fetches weather data from openweather.org and images from Tumblr.  
+* Fetches weather data from openweather.org and images from Flickr.  
 * Saves selected cities to cookies.  
 * Refreshes data each 60 min.  
 * Two view modes: three and two columns view.
