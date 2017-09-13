@@ -187,8 +187,7 @@ img {
         display: flex;
         justify-content: space-between;
         .left {
-            p {
-                margin-bottom: 2px;
+            p {    
             }
         }
         .right {
@@ -223,8 +222,9 @@ img {
     }
     .min-max-temp {
         font-size: 17px;
+        display: flex;
         &>span {
-            display: inline-block;
+            display: flex;
         }
     }
     .weather-pressure .icon:before {
@@ -276,7 +276,7 @@ img {
     font-size: 17px;
 }
 
-// styles for three-rows setting
+// styles for three-columns setting
 .three-rows {
     .weather-widget {
         font-size: 15px;
@@ -289,10 +289,12 @@ img {
             font-size: 15px;
         }
         .city-name {
-            font-size: 25px;
+            font-size: 23px;
+            padding-right: 10px;
+            padding-bottom: 5px;
         }
         .country-name {
-            padding-bottom: 10px;
+            padding-bottom: 5px;
         }
         .temp {
             font-size: 17px;
@@ -303,6 +305,9 @@ img {
         }
         .forecast-list {
             padding: 0 25px;
+            .forecast-day-temp {
+                font-size: 15px;
+            }
 			.forecast-icon .icon:before{
 				font-size: 24px;
 			}
