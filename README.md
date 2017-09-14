@@ -1,6 +1,8 @@
 # newWeather
 **Weather broadcast in AngularJS**
 
+live version: http://rpg-poznan.esy.es/newWeather/
+
 ## App features
 * Fetches weather data from openweather.org and images from Flickr.  
 * Saves selected cities to cookies.  
