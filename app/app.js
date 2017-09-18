@@ -242,7 +242,7 @@ angular.module('newWeather', [
             getCity: function (city) {
                 console.log(city);
                 var cityName = city.cityName;
-                var tags = `${cityName},city` // any of them, separated by coma
+                var tags = `${cityName}` // any of them, separated by coma
                 var tagsMode = 'all'; // Either 'any' for an OR combination of tags, or 'all' for an AND combination. Defaults to 'any' if not specified.
                 var url = `https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=${flickr_key}&text=${cityName}&tags=${tags}&tags_mode=${tagsMode}&per_page=100&format=json&sort=relevance&nojsoncallback=1`;
                 return $http({
