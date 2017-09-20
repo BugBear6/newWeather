@@ -226,6 +226,10 @@ img {
         &>span {
             display: flex;
         }
+        .icon-arrow-down2:before,
+        .icon-arrow-up2:before {
+            padding: 0 8px;
+        }
     }
     .weather-pressure .icon:before {
         font-size: 15px;
@@ -391,7 +395,26 @@ img {
 	}
 	.weather-widget .min-max-temp>span {
 		display: block;
-	}
+    }
+    .weather-widget .min-max-temp .icon-arrow-down2:before, 
+    .weather-widget .min-max-temp .icon-arrow-up2:before {
+        padding: 0;
+    }
+    .weather-widget .min-max-temp {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .weather-widget .temp.night-temp {
+        margin-top: -5px;
+        margin-bottom: 0;
+    }
+    .weather-widget .temp, .three-rows .weather-widget .temp {
+        margin-bottom: 4px;
+    }
+    .weather-widget .weather-pressure {
+        margin-top: 5px;
+    }
 }
 
 // =======================================
