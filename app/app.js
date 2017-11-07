@@ -5,6 +5,10 @@ angular.module('newWeather', [
     'switchToggle'
 ])
 
+	.config(function configCookies($cookiesProvider) {
+		$cookiesProvider.defaults['expires'] =  new Date(new Date().setFullYear(new Date().getFullYear() + 1));
+	})
+
     .controller('weatherDashboardController', ['$cookies', '$rootScope', '$interval', 'makeIdService', function ($cookies, $rootScope, $interval, makeIdService) {
         var vm = this;
         vm.cities = [];
@@ -65,19 +69,22 @@ angular.module('newWeather', [
         // ==============================
         // add city
         vm.addCity = function () {
+            var newCity;
+
             if (!vm.newCityFormData.newCityName) {
                 return;
             }
 
-            var newCity = {
+	        newCity = {
                 cityName: vm.newCityFormData.newCityName,
                 country: vm.newCityFormData.newCityCountry,
                 innerId: makeIdService.makeId(),
                 interval: $interval(function () {
+
                     // refresh weather-widget every hour
                     vm.refreshWidget(newCity.innerId);
                 }, intervalTime)
-            }
+            };
 
             vm.cities.push(newCity);
 
@@ -91,42 +98,41 @@ angular.module('newWeather', [
         // ==============================
         // close widget
         vm.closeWidget = function (innerId) {
-
             var widgetToClose = vm.getCity(innerId);
             var cityIndex = vm.cities.indexOf(widgetToClose);
 
             // cancel running interval
             $interval.cancel(widgetToClose.interval);
+
             // remove city from cities array
             vm.cities.splice(cityIndex, 1);
+
             // update cookie file
             $rootScope.$broadcast('updateCityCookie');
-        }
+        };
 
         // ==============================
         // refresh widget
         vm.refreshWidget = function (innerId) {
-
             var widgetToRefresh = vm.getCity(innerId);
             var cityIndex = vm.cities.indexOf(widgetToRefresh);
 
             vm.cities[cityIndex] = angular.copy(vm.cities[cityIndex]);
 
             console.log('refreshing ', vm.cities[cityIndex].cityName);
-        }
+        };
 
         // ==============================
         // handle change view        
         vm.changeView = function () {
             $rootScope.$broadcast('updateViewCookie');
             $rootScope.$apply();
-        }
+        };
 
     }])
 
     .filter('weatherIcon', function ($sce) {
         return function (weatherCode, isNight) {
-
             var isNight = isNight || false;
             var template;
             var iconCode;
@@ -196,15 +202,15 @@ angular.module('newWeather', [
                             getFlickrPhotoService.getCity(scope.city)
                                 .then(function onSuccess(response) {
                                     // console.log('photo', response);
-                                    var photos = response.data.photos.photo,
-                                        photoNumber = Math.floor((Math.random() * photos.length) + 1) - 1,
-                                        photo = photos[photoNumber];
+                                    var photos = response.data.photos.photo;
+                                    var photoNumber = Math.floor((Math.random() * photos.length) + 1) - 1;
+                                    var photo = photos[photoNumber];
 
-                                    var farmId = photo.farm,
-                                        serverId = photo.server,
-                                        id = photo.id,
-                                        secret = photo.secret,
-                                        size = 'c';
+                                    var farmId = photo.farm;
+                                    var serverId = photo.server;
+                                    var id = photo.id;
+                                    var secret = photo.secret;
+                                    var size = 'c';
 
                                     var photoUrl = `https://farm${farmId}.staticflickr.com/${serverId}/${id}_${secret}_${size}.jpg`;
                                     scope.location.photoUrl = photoUrl;
