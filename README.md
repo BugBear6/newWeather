@@ -10,7 +10,7 @@ live version: http://rpg-poznan.esy.es/newWeather/
 * Two view modes: three and two columns view.
 * RWD.
    
-## Picures
+## Pictures
    
 Three columns view:   
 ![Three rows view](https://raw.githubusercontent.com/BugBear6/newWeather/master/print_screen_v1.jpg)   
